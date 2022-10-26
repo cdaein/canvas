@@ -1,7 +1,7 @@
 import type { Pt, Pts } from "@daeinc/geom";
 
 /**
- *
+ * draw a circle with diameter
  * @param ctx
  * @param pt [x, y]
  * @param diam diameter
@@ -13,6 +13,18 @@ export const drawCircle = (
 ) => {
   ctx.beginPath();
   ctx.arc(pt[0], pt[1], diam * 0.5, 0, Math.PI * 2);
+};
+
+/**
+ * draw a line
+ * @param ctx
+ * @param pt1 [x, y]
+ * @param pt2 [x, y]
+ */
+export const drawLine = (ctx: CanvasRenderingContext2D, pt1: Pt, pt2: Pt) => {
+  ctx.beginPath();
+  ctx.moveTo(pt1[0], pt1[1]);
+  ctx.lineTo(pt2[0], pt2[1]);
 };
 
 /**

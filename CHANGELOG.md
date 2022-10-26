@@ -1,5 +1,7 @@
 # Changelog
 
+added `drawLine()`
+
 ## `0.1.1`
 
 fixed wrong dependencies

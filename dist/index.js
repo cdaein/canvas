@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCanvas = exports.drawPath = exports.drawCircle = void 0;
+exports.createCanvas = exports.drawPath = exports.drawLine = exports.drawCircle = void 0;
 /**
- *
+ * draw a circle with diameter
  * @param ctx
  * @param pt [x, y]
  * @param diam diameter
@@ -12,6 +12,18 @@ const drawCircle = (ctx, pt, diam) => {
     ctx.arc(pt[0], pt[1], diam * 0.5, 0, Math.PI * 2);
 };
 exports.drawCircle = drawCircle;
+/**
+ * draw a line
+ * @param ctx
+ * @param pt1 [x, y]
+ * @param pt2 [x, y]
+ */
+const drawLine = (ctx, pt1, pt2) => {
+    ctx.beginPath();
+    ctx.moveTo(pt1[0], pt1[1]);
+    ctx.lineTo(pt2[0], pt2[1]);
+};
+exports.drawLine = drawLine;
 /**
  * draw a 2d path. need to manually stroke/fill afterwards.
  * @param ctx canvas context 2d
