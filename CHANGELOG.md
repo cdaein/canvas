@@ -1,5 +1,7 @@
 # Changelog
 
+## `0.2.0`
+
 added `drawLine()`
 
 ## `0.1.1`
