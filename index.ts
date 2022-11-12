@@ -81,3 +81,26 @@ export const drawPath = (
   for (let i = 1; i < path.length; i++) ctx.lineTo(path[i][0], path[i][1]);
   if (close) ctx.closePath();
 };
+
+/**
+ * use quadratic curve to smoothen hard edges of path. use with geom.generateSmoothPath()
+ * @param ctx
+ * @param path array of [ x, y ]
+ */
+export const drawSmoothPath = (ctx: CanvasRenderingContext2D, path: Pts) => {
+  ctx.beginPath();
+  ctx.moveTo(path[0][0], path[0][1]);
+  ctx.lineTo(path[1][0], path[1][1]);
+  ctx.lineTo(path[2][0], path[2][1]);
+  for (let i = 3; i < path.length - 3; i += 3) {
+    ctx.quadraticCurveTo(
+      path[i][0],
+      path[i][1],
+      path[i + 1][0],
+      path[i + 1][1]
+    );
+    ctx.lineTo(path[i + 2][0], path[i + 2][1]);
+  }
+  const lastPt = path[path.length - 1];
+  ctx.lineTo(lastPt[0], lastPt[1]);
+};

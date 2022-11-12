@@ -39,4 +39,10 @@ export declare const drawLine: (ctx: CanvasRenderingContext2D, pt1: Pt, pt2: Pt)
  * @param close close path or not. default is false
  */
 export declare const drawPath: (ctx: CanvasRenderingContext2D, path: Pts, close?: boolean) => void;
+/**
+ * use quadratic curve to smoothen hard edges of path. use with geom.generateSmoothPath()
+ * @param ctx
+ * @param path array of [ x, y ]
+ */
+export declare const drawSmoothPath: (ctx: CanvasRenderingContext2D, path: Pts) => void;
 //# sourceMappingURL=index.d.ts.map

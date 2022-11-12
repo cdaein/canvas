@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.createCanvas = void 0;
+exports.drawSmoothPath = exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.createCanvas = void 0;
 /**
  *
  * TODO
@@ -68,4 +68,22 @@ const drawPath = (ctx, path, close = false) => {
         ctx.closePath();
 };
 exports.drawPath = drawPath;
+/**
+ * use quadratic curve to smoothen hard edges of path. use with geom.generateSmoothPath()
+ * @param ctx
+ * @param path array of [ x, y ]
+ */
+const drawSmoothPath = (ctx, path) => {
+    ctx.beginPath();
+    ctx.moveTo(path[0][0], path[0][1]);
+    ctx.lineTo(path[1][0], path[1][1]);
+    ctx.lineTo(path[2][0], path[2][1]);
+    for (let i = 3; i < path.length - 3; i += 3) {
+        ctx.quadraticCurveTo(path[i][0], path[i][1], path[i + 1][0], path[i + 1][1]);
+        ctx.lineTo(path[i + 2][0], path[i + 2][1]);
+    }
+    const lastPt = path[path.length - 1];
+    ctx.lineTo(lastPt[0], lastPt[1]);
+};
+exports.drawSmoothPath = drawSmoothPath;
 //# sourceMappingURL=index.js.map
