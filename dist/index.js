@@ -1,6 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCanvas = exports.drawPath = exports.drawLine = exports.drawCircle = void 0;
+exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.createCanvas = void 0;
+/**
+ *
+ * TODO
+ * - respond to device pixel ratio
+ * @param param0
+ * @returns Canvas object
+ */
+const createCanvas = ({ width, height, }) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    document.body.appendChild(canvas);
+    return canvas;
+};
+exports.createCanvas = createCanvas;
 /**
  * draw a circle with diameter
  * @param ctx
@@ -12,6 +27,20 @@ const drawCircle = (ctx, pt, diam) => {
     ctx.arc(pt[0], pt[1], diam * 0.5, 0, Math.PI * 2);
 };
 exports.drawCircle = drawCircle;
+/**
+ *
+ * @param ctx
+ * @param msg
+ * @param x
+ * @param y
+ */
+const drawFillText = (ctx, msg, pt
+// options?: { font: string }
+) => {
+    // ctx.font = options?.font ? (ctx.font = options.font) : "8px Helvetica";
+    ctx.fillText(msg, pt[0], pt[1]);
+};
+exports.drawFillText = drawFillText;
 /**
  * draw a line
  * @param ctx
@@ -39,14 +68,4 @@ const drawPath = (ctx, path, close = false) => {
         ctx.closePath();
 };
 exports.drawPath = drawPath;
-// TODO
-// - respond to device pixel ratio
-const createCanvas = ({ width, height, }) => {
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    document.body.appendChild(canvas);
-    return canvas;
-};
-exports.createCanvas = createCanvas;
 //# sourceMappingURL=index.js.map
