@@ -1,5 +1,7 @@
 # Changelog
 
+added `drawFillText()`
+
 ## `0.2.0`
 
 added `drawLine()`

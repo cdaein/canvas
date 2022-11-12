@@ -1,6 +1,27 @@
 import type { Pt, Pts } from "@daeinc/geom";
 
 /**
+ *
+ * TODO
+ * - respond to device pixel ratio
+ * @param param0
+ * @returns Canvas object
+ */
+export const createCanvas = ({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) => {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  document.body.appendChild(canvas);
+  return canvas;
+};
+
+/**
  * draw a circle with diameter
  * @param ctx
  * @param pt [x, y]
@@ -13,6 +34,23 @@ export const drawCircle = (
 ) => {
   ctx.beginPath();
   ctx.arc(pt[0], pt[1], diam * 0.5, 0, Math.PI * 2);
+};
+
+/**
+ *
+ * @param ctx
+ * @param msg
+ * @param x
+ * @param y
+ */
+export const drawFillText = (
+  ctx: CanvasRenderingContext2D,
+  msg: string,
+  pt: Pt
+  // options?: { font: string }
+) => {
+  // ctx.font = options?.font ? (ctx.font = options.font) : "8px Helvetica";
+  ctx.fillText(msg, pt[0], pt[1]);
 };
 
 /**
@@ -42,20 +80,4 @@ export const drawPath = (
   ctx.moveTo(path[0][0], path[0][1]);
   for (let i = 1; i < path.length; i++) ctx.lineTo(path[i][0], path[i][1]);
   if (close) ctx.closePath();
-};
-
-// TODO
-// - respond to device pixel ratio
-export const createCanvas = ({
-  width,
-  height,
-}: {
-  width: number;
-  height: number;
-}) => {
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  document.body.appendChild(canvas);
-  return canvas;
 };
