@@ -1,6 +1,9 @@
 # Changelog
 
-added `drawFillText()`
+## `0.3.0`
+
+- added `createCanvas()`
+- added `drawFillText()`
 
 ## `0.2.0`
 
