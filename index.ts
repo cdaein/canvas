@@ -83,6 +83,24 @@ export const drawPath = (
 };
 
 /**
+ * draw a rectangle
+ * @param pt [ x, y ]
+ * @param size [ width, height ]
+ * @param mode "corner" or "center"
+ */
+export const drawRect = (
+  ctx: CanvasRenderingContext2D,
+  pt: Pt,
+  size: Pt,
+  mode: "corner" | "center" = "corner"
+) => {
+  if (mode === "corner") ctx.rect(pt[0], pt[1], size[0], size[1]);
+  else if (mode === "center")
+    ctx.rect(pt[0] - size[0] / 2, pt[1] - size[1] / 2, size[0], size[1]);
+  else throw new Error(`drawRect() does not support mode: ${mode}`);
+};
+
+/**
  * use quadratic curve to smoothen hard edges of path. use with geom.generateSmoothPath()
  * @param ctx
  * @param path array of [ x, y ]

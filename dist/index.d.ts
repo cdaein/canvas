@@ -40,6 +40,13 @@ export declare const drawLine: (ctx: CanvasRenderingContext2D, pt1: Pt, pt2: Pt)
  */
 export declare const drawPath: (ctx: CanvasRenderingContext2D, path: Pts, close?: boolean) => void;
 /**
+ * draw a rectangle
+ * @param pt [ x, y ]
+ * @param size [ width, height ]
+ * @param mode "corner" or "center"
+ */
+export declare const drawRect: (ctx: CanvasRenderingContext2D, pt: Pt, size: Pt, mode?: "corner" | "center") => void;
+/**
  * use quadratic curve to smoothen hard edges of path. use with geom.generateSmoothPath()
  * @param ctx
  * @param path array of [ x, y ]
