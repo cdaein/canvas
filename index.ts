@@ -94,6 +94,7 @@ export const drawRect = (
   size: Pt,
   mode: "corner" | "center" = "corner"
 ) => {
+  ctx.beginPath();
   if (mode === "corner") ctx.rect(pt[0], pt[1], size[0], size[1]);
   else if (mode === "center")
     ctx.rect(pt[0] - size[0] / 2, pt[1] - size[1] / 2, size[0], size[1]);

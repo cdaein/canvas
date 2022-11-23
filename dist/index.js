@@ -75,6 +75,7 @@ exports.drawPath = drawPath;
  * @param mode "corner" or "center"
  */
 const drawRect = (ctx, pt, size, mode = "corner") => {
+    ctx.beginPath();
     if (mode === "corner")
         ctx.rect(pt[0], pt[1], size[0], size[1]);
     else if (mode === "center")
