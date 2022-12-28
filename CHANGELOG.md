@@ -1,5 +1,7 @@
 # Changelog
 
+## `0.6.0`
+
 - added `createCanvas()` new parameters (`parent` and `pixelRatio`)
 
 ## `0.5.0`
