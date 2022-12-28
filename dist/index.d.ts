@@ -1,14 +1,18 @@
 import type { Pt, Pts } from "@daeinc/geom";
 /**
- *
- * TODO
- * - respond to device pixel ratio
- * @param param0
+ * create a new canvas element and attach to document
+ * @param {Object} param - object
+ * @param {string | HTMLElement} param.parent - parent string or element
+ * @param {number} param.width
+ * @param {number} param.height
+ * @param {number} param.pixelRatio
  * @returns Canvas object
  */
-export declare const createCanvas: ({ width, height, }: {
+export declare const createCanvas: ({ parent, width, height, pixelRatio, }: {
+    parent?: string | HTMLElement | undefined;
     width: number;
     height: number;
+    pixelRatio?: number | undefined;
 }) => HTMLCanvasElement;
 /**
  * draw a circle with diameter

@@ -2,17 +2,42 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.drawSmoothPath = exports.drawRect = exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.createCanvas = void 0;
 /**
- *
- * TODO
- * - respond to device pixel ratio
- * @param param0
+ * create a new canvas element and attach to document
+ * @param {Object} param - object
+ * @param {string | HTMLElement} param.parent - parent string or element
+ * @param {number} param.width
+ * @param {number} param.height
+ * @param {number} param.pixelRatio
  * @returns Canvas object
  */
-const createCanvas = ({ width, height, }) => {
+const createCanvas = ({ parent, width, height, pixelRatio = 1, }) => {
+    // if canvas doesn't already exist
     const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    document.body.appendChild(canvas);
+    // if parent
+    let canvasParentElement;
+    if (parent !== undefined) {
+        if (typeof parent === "string") {
+            // if string
+            canvasParentElement = document.querySelector(parent);
+            if (!canvasParentElement) {
+                throw new Error("could not select canvas parent element. check your parent string again");
+            }
+        }
+        else {
+            // if already HTMLElement
+            canvasParentElement = parent;
+        }
+        canvasParentElement.appendChild(canvas);
+    }
+    else {
+        // if no parent, append to body
+        document.body.appendChild(canvas);
+    }
+    // canvas scaling
+    canvas.width = width * pixelRatio;
+    canvas.height = height * pixelRatio;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
     return canvas;
 };
 exports.createCanvas = createCanvas;
