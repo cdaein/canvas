@@ -31,7 +31,7 @@ export const createCanvas = ({
       canvasParentElement = document.querySelector(parent)!;
       if (!canvasParentElement) {
         throw new Error(
-          "could not select canvas parent element. check your parent string again"
+          "could not select canvas parent element. make sure the parent element exists."
         );
       }
     } else {
