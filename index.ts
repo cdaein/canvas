@@ -1,10 +1,12 @@
 import type { Pt, Pts } from "@daeinc/geom";
 
 /**
- *
- * TODO
- * - respond to device pixel ratio
- * @param param0
+ * create a new canvas element and attach to document
+ * @param {Object} param - object
+ * @param {string | HTMLElement} param.parent - parent string or element
+ * @param {number} param.width
+ * @param {number} param.height
+ * @param {number} param.pixelRatio
  * @returns Canvas object
  */
 export const createCanvas = ({
@@ -38,6 +40,7 @@ export const createCanvas = ({
     }
     canvasParentElement.appendChild(canvas);
   } else {
+    // if no parent, append to body
     document.body.appendChild(canvas);
   }
 

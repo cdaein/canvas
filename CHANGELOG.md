@@ -1,5 +1,7 @@
 # Changelog
 
+- added `createCanvas()` new parameters (`parent` and `pixelRatio`)
+
 ## `0.5.0`
 
 added `drawRect()`
