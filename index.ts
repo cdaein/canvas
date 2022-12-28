@@ -8,16 +8,45 @@ import type { Pt, Pts } from "@daeinc/geom";
  * @returns Canvas object
  */
 export const createCanvas = ({
+  parent,
   width,
   height,
+  pixelRatio = 1,
 }: {
+  parent?: string | HTMLElement;
   width: number;
   height: number;
+  pixelRatio?: number;
 }) => {
+  // if canvas doesn't already exist
   const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-  document.body.appendChild(canvas);
+
+  // if parent
+  let canvasParentElement: HTMLElement;
+  if (parent !== undefined) {
+    if (typeof parent === "string") {
+      // if string
+      canvasParentElement = document.querySelector(parent)!;
+      if (!canvasParentElement) {
+        throw new Error(
+          "could not select canvas parent element. check your parent string again"
+        );
+      }
+    } else {
+      // if already HTMLElement
+      canvasParentElement = parent;
+    }
+    canvasParentElement.appendChild(canvas);
+  } else {
+    document.body.appendChild(canvas);
+  }
+
+  // canvas scaling
+  canvas.width = width * pixelRatio;
+  canvas.height = height * pixelRatio;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+
   return canvas;
 };
 
