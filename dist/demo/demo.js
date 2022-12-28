@@ -6,8 +6,8 @@ parent.id = "app";
 document.body.appendChild(parent);
 const canvas = (0, index_1.createCanvas)({
     parent,
-    width: 800,
-    height: 500,
+    width: window.innerWidth,
+    height: window.innerHeight,
     pixelRatio: 2,
 });
 const ctx = canvas.getContext("2d");

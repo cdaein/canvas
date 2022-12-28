@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.drawSmoothPath = exports.drawRect = exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.createCanvas = void 0;
+exports.drawSmoothPath = exports.drawRect = exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.resizeCanvas = exports.createCanvas = void 0;
 /**
  * create a new canvas element and attach to document
- * @param {Object} param - object
+ * @param {object} param - object
  * @param {string | HTMLElement} param.parent - parent string or element
  * @param {number} param.width
  * @param {number} param.height
@@ -12,7 +12,7 @@ exports.drawSmoothPath = exports.drawRect = exports.drawPath = exports.drawLine 
  */
 const createCanvas = ({ parent, width, height, pixelRatio = 1, }) => {
     // if canvas doesn't already exist
-    const canvas = document.createElement("canvas");
+    let canvas = document.createElement("canvas");
     // if parent
     let canvasParentElement;
     if (parent !== undefined) {
@@ -20,7 +20,7 @@ const createCanvas = ({ parent, width, height, pixelRatio = 1, }) => {
             // if string
             canvasParentElement = document.querySelector(parent);
             if (!canvasParentElement) {
-                throw new Error("could not select canvas parent element. check your parent string again");
+                throw new Error("could not select canvas parent element. make sure the parent element exists.");
             }
         }
         else {
@@ -33,14 +33,26 @@ const createCanvas = ({ parent, width, height, pixelRatio = 1, }) => {
         // if no parent, append to body
         document.body.appendChild(canvas);
     }
-    // canvas scaling
+    canvas = (0, exports.resizeCanvas)({ canvas, width, height, pixelRatio });
+    return canvas;
+};
+exports.createCanvas = createCanvas;
+/**
+ * resize canvas with given pixelRatio.
+ * @param {object} param - object
+ * @param {HTMLCanvasElement} param.canvas - canvas to resize
+ * @param {number} param.width
+ * @param {number} param.height
+ * @param {number} param.pixelRatio
+ */
+const resizeCanvas = ({ canvas, width, height, pixelRatio, }) => {
     canvas.width = width * pixelRatio;
     canvas.height = height * pixelRatio;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     return canvas;
 };
-exports.createCanvas = createCanvas;
+exports.resizeCanvas = resizeCanvas;
 /**
  * draw a circle with diameter
  * @param ctx
