@@ -2,7 +2,7 @@ import type { Pt, Pts } from "@daeinc/geom";
 
 /**
  * create a new canvas element and attach to document
- * @param {Object} param - object
+ * @param {object} param - object
  * @param {string | HTMLElement} param.parent - parent string or element
  * @param {number} param.width
  * @param {number} param.height
@@ -21,7 +21,7 @@ export const createCanvas = ({
   pixelRatio?: number;
 }) => {
   // if canvas doesn't already exist
-  const canvas = document.createElement("canvas");
+  let canvas = document.createElement("canvas");
 
   // if parent
   let canvasParentElement: HTMLElement;
@@ -44,7 +44,30 @@ export const createCanvas = ({
     document.body.appendChild(canvas);
   }
 
-  // canvas scaling
+  canvas = resizeCanvas({ canvas, width, height, pixelRatio });
+
+  return canvas;
+};
+
+/**
+ * resize canvas with given pixelRatio.
+ * @param {object} param - object
+ * @param {HTMLCanvasElement} param.canvas - canvas to resize
+ * @param {number} param.width
+ * @param {number} param.height
+ * @param {number} param.pixelRatio
+ */
+export const resizeCanvas = ({
+  canvas,
+  width,
+  height,
+  pixelRatio,
+}: {
+  canvas: HTMLCanvasElement;
+  width: number;
+  height: number;
+  pixelRatio: number;
+}) => {
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
   canvas.style.width = `${width}px`;

@@ -6,12 +6,11 @@ document.body.appendChild(parent);
 
 const canvas = createCanvas({
   parent,
-  width: 800,
-  height: 500,
+  width: window.innerWidth,
+  height: window.innerHeight,
   pixelRatio: 2,
 });
 const ctx = canvas.getContext("2d")!;
-
 const { width, height } = canvas;
 
 ctx.fillStyle = `gray`;
