@@ -10,7 +10,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "test": "jest --watch",
-    "demo": "parcel ./demo/demo.html --dist-dir ./demo/build/",
+    "demo": "parcel ./demo/demo.html --no-source-maps --no-cache --dist-dir ./demo/build/",
     "build": "tsc --build --clean && tsc --build"
   },
   "author": "Daeinc",
