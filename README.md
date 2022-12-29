@@ -1,6 +1,8 @@
 # @daeinc/canvas
 
-## Installation
+Note: drawing functions up to `0.7.1` has now moved to [`@daeinc/draw`](https://github.com/cdaein/draw).
+
+## Install
 
 ```sh
 npm i @daeinc/canvas
@@ -9,7 +11,7 @@ npm i @daeinc/canvas
 then,
 
 ```ts
-import { drawPath, ... } from "@daeinc/canvas"
+import { createCanvas, ... } from "@daeinc/canvas"
 ```
 
 ## Functions
@@ -20,6 +22,8 @@ It uses two custom types, `Pt` and `Pts`, each representing `number[]` and `Pt[]
 import type { Pt, Pts } from "@daeinc/geom";
 ```
 
+### createCanvas
+
 ```ts
 const createCanvas: ({
   parent,
@@ -27,44 +31,32 @@ const createCanvas: ({
   height,
   pixelRatio,
 }: {
-  parent?: string | HTMLElement | undefined;
+  parent?: string | Element | undefined;
   width: number;
   height: number;
   pixelRatio?: number | undefined;
 }) => HTMLCanvasElement;
 ```
 
-Creates a new canvas. It takes an optional `parent` parameter. The parent can be either `string` (will be used for `querySelector()`) or `HTMLElement`.
+Create a new canvas. It takes an optional `parent` parameter. The parent can be either `string` (will be used for `querySelector()`) or `Element`.
+
+### resizeCanvas
 
 ```ts
-const drawCircle: (ctx: CanvasRenderingContext2D, pt: Pt, diam: number) => void;
+const resizeCanvas: ({
+  canvas,
+  width,
+  height,
+  pixelRatio,
+}: {
+  canvas: HTMLCanvasElement;
+  width: number;
+  height: number;
+  pixelRatio: number;
+}) => HTMLCanvasElement;
 ```
 
-```ts
-const drawFillText: (
-  ctx: CanvasRenderingContext2D,
-  msg: string,
-  pt: Pt
-) => void;
-```
-
-```ts
-const drawLine: (ctx: CanvasRenderingContext2D, pt1: Pt, pt2: Pt) => void;
-```
-
-```ts
-const drawPath: (
-  ctx: CanvasRenderingContext2D,
-  path: Pts,
-  close?: boolean
-) => void;
-```
-
-```ts
-const drawSmoothPath: (ctx: CanvasRenderingContext2D, path: Pts) => void;
-```
-
-Uses quadratic curves to smoothen hard edges of path. The input path is expected to be generated with `generateSmoothPath()` from another package `@daeinc/geom`.
+Resize a canvas with the given `width`, `height` and `pixelRatio`
 
 ## License
 

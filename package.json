@@ -16,11 +16,10 @@
   "author": "Daeinc",
   "license": "MIT",
   "dependencies": {
-    "@daeinc/dom": "^0.1.0",
-    "@daeinc/geom": "^0.7.1"
+    "@daeinc/dom": "^0.1.0"
   },
   "devDependencies": {
-    "jest": "^29.1.2",
+    "jest": "^29.3.1",
     "ts-jest": "^29.0.3"
   },
   "publishConfig": {

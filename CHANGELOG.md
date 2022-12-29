@@ -1,5 +1,9 @@
 # Changelog
 
+## `0.8.0`
+
+- moved all drawing functions to `@daeinc/draw`.
+
 ## `0.7.1`
 
 - updated with `toDomElement()` from `@daeinc/dom`
