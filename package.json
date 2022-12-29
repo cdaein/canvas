@@ -16,6 +16,7 @@
   "author": "Daeinc",
   "license": "MIT",
   "dependencies": {
+    "@daeinc/dom": "^0.1.0",
     "@daeinc/geom": "^0.7.1"
   },
   "devDependencies": {

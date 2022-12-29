@@ -66,12 +66,6 @@ const drawSmoothPath: (ctx: CanvasRenderingContext2D, path: Pts) => void;
 
 Uses quadratic curves to smoothen hard edges of path. The input path is expected to be generated with `generateSmoothPath()` from another package `@daeinc/geom`.
 
-## To Dos
-
-- add `drawText()` or `drawStrokeText()`
-  - https://www.w3schools.com/graphics/canvas_text.asp
-- add canvas tests
-
 ## License
 
 MIT

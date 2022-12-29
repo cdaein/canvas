@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.drawSmoothPath = exports.drawRect = exports.drawPath = exports.drawLine = exports.drawFillText = exports.drawCircle = exports.resizeCanvas = exports.createCanvas = void 0;
+const dom_1 = require("@daeinc/dom");
 /**
  * create a new canvas element and attach to document
  * @param {object} param - object
@@ -16,17 +17,7 @@ const createCanvas = ({ parent, width, height, pixelRatio = 1, }) => {
     // if parent
     let canvasParentElement;
     if (parent !== undefined) {
-        if (typeof parent === "string") {
-            // if string
-            canvasParentElement = document.querySelector(parent);
-            if (!canvasParentElement) {
-                throw new Error("could not select canvas parent element. make sure the parent element exists.");
-            }
-        }
-        else {
-            // if already HTMLElement
-            canvasParentElement = parent;
-        }
+        canvasParentElement = (0, dom_1.toDomElement)(parent);
         canvasParentElement.appendChild(canvas);
     }
     else {

@@ -5,6 +5,7 @@ parent.id = "app";
 document.body.appendChild(parent);
 
 const canvas = createCanvas({
+  // parent: "div#test",
   parent,
   width: window.innerWidth,
   height: window.innerHeight,
@@ -21,7 +22,7 @@ const draw = (width: number, height: number, frameCount: number) => {
   const rad = width / 4 + Math.sin(frameCount * 0.02) * 100;
 
   ctx.beginPath();
-  ctx.arc(width / 2, height / 2, rad, 0, Math.PI * 2);
+  ctx.arc(width / 2, height / 2, width / 2, 0, Math.PI * 2);
   ctx.fillStyle = `white`;
   ctx.fill();
 };

@@ -1,4 +1,5 @@
 import type { Pt, Pts } from "@daeinc/geom";
+import { toDomElement } from "@daeinc/dom";
 
 /**
  * create a new canvas element and attach to document
@@ -24,20 +25,9 @@ export const createCanvas = ({
   let canvas = document.createElement("canvas");
 
   // if parent
-  let canvasParentElement: HTMLElement;
+  let canvasParentElement: Element;
   if (parent !== undefined) {
-    if (typeof parent === "string") {
-      // if string
-      canvasParentElement = document.querySelector(parent)!;
-      if (!canvasParentElement) {
-        throw new Error(
-          "could not select canvas parent element. make sure the parent element exists."
-        );
-      }
-    } else {
-      // if already HTMLElement
-      canvasParentElement = parent;
-    }
+    canvasParentElement = toDomElement(parent);
     canvasParentElement.appendChild(canvas);
   } else {
     // if no parent, append to body
