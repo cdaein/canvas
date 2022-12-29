@@ -1,5 +1,13 @@
 # Changelog
 
+## `0.7.1`
+
+- updated with `toDomElement()` from `@daeinc/dom`
+
+## `0.7.0`
+
+- added `resizeCanvas()`
+
 ## `0.6.0`
 
 - added `createCanvas()` new parameters (`parent` and `pixelRatio`)
