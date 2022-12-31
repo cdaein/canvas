@@ -1,49 +1,63 @@
 import { createCanvas, resizeCanvas } from "../index";
+import { drawCircle, drawFillText } from "@daeinc/draw";
 
 const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
-const canvas = createCanvas({
+const {
+  canvas,
+  context: ctx,
+  width: w,
+  height: h,
+} = createCanvas({
   // parent: "div#test",
-  parent,
   width: window.innerWidth,
   height: window.innerHeight,
-  pixelRatio: window.devicePixelRatio,
+  pixelRatio: 2,
+  scaleContext: true,
 });
-const ctx = canvas.getContext("2d")!;
 
-let { width, height } = canvas;
+// console.log(canvas.width, canvas.height);
+// console.log(w, h);
 
-const draw = (width: number, height: number, frameCount: number) => {
+let width = w;
+let height = h;
+
+const draw = (width: number, height: number, count: number) => {
   ctx.fillStyle = `gray`;
   ctx.fillRect(0, 0, width, height);
 
-  const rad = width / 4 + Math.sin(frameCount * 0.02) * 100;
+  drawCircle(ctx, [width / 2, height / 2], 250);
+  ctx.fillStyle = `white`;
+  ctx.fill();
 
   ctx.beginPath();
-  ctx.arc(width / 2, height / 2, width / 2, 0, Math.PI * 2);
-  ctx.fillStyle = `white`;
+  ctx.font = `${50 + Math.sin(count * 0.01) * 30}px serif`;
+  ctx.textAlign = `center`;
+  ctx.fillStyle = `black`;
+  drawFillText(ctx, "TEXT", [width / 2, height / 2]);
   ctx.fill();
 };
 
-let frameCount = 0;
+let count = 0;
 const loop = () => {
   window.requestAnimationFrame(loop);
-  draw(width, height, frameCount);
 
-  frameCount += 1;
+  draw(width, height, count);
+
+  count++;
 };
 loop();
 
 // respond to resize event
 window.addEventListener("resize", () => {
-  resizeCanvas({
+  const { width: w, height: h } = resizeCanvas({
     canvas,
     width: window.innerWidth,
     height: window.innerHeight,
-    pixelRatio: window.devicePixelRatio,
+    pixelRatio: 2,
   });
-  width = canvas.width;
-  height = canvas.height;
+  width = w;
+  height = h;
 });
