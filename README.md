@@ -16,12 +16,6 @@ import { createCanvas, ... } from "@daeinc/canvas"
 
 ## Functions
 
-It uses two custom types, `Pt` and `Pts`, each representing `number[]` and `Pt[]`.
-
-```ts
-import type { Pt, Pts } from "@daeinc/geom";
-```
-
 ### createCanvas
 
 ```ts
@@ -30,15 +24,22 @@ const createCanvas: ({
   width,
   height,
   pixelRatio,
+  scaleContext,
 }: {
   parent?: string | Element | undefined;
   width: number;
   height: number;
   pixelRatio?: number | undefined;
-}) => HTMLCanvasElement;
+  scaleContext?: boolean | undefined;
+}) => {
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  width: number;
+  height: number;
+};
 ```
 
-Create a new canvas. It takes an optional `parent` parameter. The parent can be either `string` (will be used for `querySelector()`) or `Element`.
+Create a new canvas and return `{ canvas, context, width, height }`. It takes an optional `parent` parameter. The parent can be either `string` (will be used for `querySelector()`) or `Element`. Returned `width` and `height` may not be the same as `canvas.width` and `canvas.height` due to `pixelRatio` scaling.
 
 ### resizeCanvas
 
@@ -48,15 +49,26 @@ const resizeCanvas: ({
   width,
   height,
   pixelRatio,
+  scaleContext,
 }: {
   canvas: HTMLCanvasElement;
   width: number;
   height: number;
-  pixelRatio: number;
-}) => HTMLCanvasElement;
+  pixelRatio?: number | undefined;
+  scaleContext?: boolean | undefined;
+}) => {
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  width: number;
+  height: number;
+};
 ```
 
-Resize a canvas with the given `width`, `height` and `pixelRatio`
+Resize canvas and return data `{ canvas, context, width, height }`. When `scaleContext=true`, it also scaled the context to `pixelRatio`.
+
+## Example
+
+See the demo in `demo/demo.ts`.
 
 ## License
 
