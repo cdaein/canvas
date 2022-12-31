@@ -11,7 +11,7 @@ const dom_1 = require("@daeinc/dom");
  * @param {number} opts.height
  * @param {number} opts.pixelRatio - default: 1
  * @param {boolean} opts.scaleContext - scale context to keep shape sizes consistent. default: true.
- * @returns {CanvasData} object - canvas, context, width, height
+ * @returns object - { canvas, context, width, height }
 
  */
 const createCanvas = ({ parent, width, height, pixelRatio = 1, scaleContext = true, }) => {
@@ -46,7 +46,7 @@ exports.createCanvas = createCanvas;
  * @param opts.height
  * @param opts.pixelRatio - default:1
  * @param opts.scaleContext - default:true
- * @returns {CanvasData} object - canvas, context, width, height
+ * @returns object - { canvas, context, width, height }
  */
 const resizeCanvas = ({ canvas, width, height, pixelRatio = 1, scaleContext = true, }) => {
     canvas.width = width * pixelRatio;

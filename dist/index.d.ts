@@ -1,9 +1,3 @@
-type CanvasData = {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
-    width: number;
-    height: number;
-};
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
  *
@@ -13,7 +7,7 @@ type CanvasData = {
  * @param {number} opts.height
  * @param {number} opts.pixelRatio - default: 1
  * @param {boolean} opts.scaleContext - scale context to keep shape sizes consistent. default: true.
- * @returns {CanvasData} object - canvas, context, width, height
+ * @returns object - { canvas, context, width, height }
 
  */
 export declare const createCanvas: ({ parent, width, height, pixelRatio, scaleContext, }: {
@@ -22,7 +16,12 @@ export declare const createCanvas: ({ parent, width, height, pixelRatio, scaleCo
     height: number;
     pixelRatio?: number | undefined;
     scaleContext?: boolean | undefined;
-}) => CanvasData;
+}) => {
+    canvas: HTMLCanvasElement;
+    context: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+};
 /**
  * Resize canvas with given pixelRatio.
  *
@@ -32,7 +31,7 @@ export declare const createCanvas: ({ parent, width, height, pixelRatio, scaleCo
  * @param opts.height
  * @param opts.pixelRatio - default:1
  * @param opts.scaleContext - default:true
- * @returns {CanvasData} object - canvas, context, width, height
+ * @returns object - { canvas, context, width, height }
  */
 export declare const resizeCanvas: ({ canvas, width, height, pixelRatio, scaleContext, }: {
     canvas: HTMLCanvasElement;
@@ -40,5 +39,9 @@ export declare const resizeCanvas: ({ canvas, width, height, pixelRatio, scaleCo
     height: number;
     pixelRatio?: number | undefined;
     scaleContext?: boolean | undefined;
-}) => CanvasData;
-export {};
+}) => {
+    canvas: HTMLCanvasElement;
+    context: CanvasRenderingContext2D;
+    width: number;
+    height: number;
+};

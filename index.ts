@@ -1,12 +1,5 @@
 import { toDomElement } from "@daeinc/dom";
 
-type CanvasData = {
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
-  width: number;
-  height: number;
-};
-
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
  *
@@ -16,7 +9,7 @@ type CanvasData = {
  * @param {number} opts.height
  * @param {number} opts.pixelRatio - default: 1
  * @param {boolean} opts.scaleContext - scale context to keep shape sizes consistent. default: true.
- * @returns {CanvasData} object - canvas, context, width, height
+ * @returns object - { canvas, context, width, height }
 
  */
 export const createCanvas = ({
@@ -31,7 +24,7 @@ export const createCanvas = ({
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
-}): CanvasData => {
+}) => {
   if (pixelRatio <= 0) throw new Error("pixelRatio must be great than 0");
 
   let canvas = document.createElement("canvas");
@@ -64,7 +57,7 @@ export const createCanvas = ({
  * @param opts.height
  * @param opts.pixelRatio - default:1
  * @param opts.scaleContext - default:true
- * @returns {CanvasData} object - canvas, context, width, height
+ * @returns object - { canvas, context, width, height }
  */
 export const resizeCanvas = ({
   canvas,
@@ -78,7 +71,7 @@ export const resizeCanvas = ({
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
-}): CanvasData => {
+}) => {
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
   canvas.style.width = `${width}px`;
