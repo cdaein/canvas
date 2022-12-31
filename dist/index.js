@@ -44,4 +44,3 @@ const resizeCanvas = ({ canvas, width, height, pixelRatio, }) => {
     return canvas;
 };
 exports.resizeCanvas = resizeCanvas;
-//# sourceMappingURL=index.js.map

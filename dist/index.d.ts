@@ -27,4 +27,3 @@ export declare const resizeCanvas: ({ canvas, width, height, pixelRatio, }: {
     height: number;
     pixelRatio: number;
 }) => HTMLCanvasElement;
-//# sourceMappingURL=index.d.ts.map
