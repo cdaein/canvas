@@ -64,7 +64,7 @@ const resizeCanvas: ({
 };
 ```
 
-Resize canvas and return data `{ canvas, context, width, height }`. When `scaleContext=true`, it also scaled the context to `pixelRatio`.
+Resize canvas and return data `{ canvas, context, width, height }`. When `scaleContext=true`, it also scale the context to `pixelRatio`.
 
 ## Example
 
