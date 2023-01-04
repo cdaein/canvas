@@ -1,6 +1,7 @@
 # @daeinc/canvas
 
-Note: drawing functions up to `0.7.1` has now moved to [`@daeinc/draw`](https://github.com/cdaein/draw).
+![npm version badge](https://img.shields.io/npm/v/@daeinc/canvas)
+![npm bundle size badge](https://img.shields.io/bundlephobia/min/@daeinc/canvas)
 
 ## Install
 
@@ -17,6 +18,8 @@ import { createCanvas, ... } from "@daeinc/canvas"
 ## Functions
 
 Documentation is updated for `0.10.0`.
+
+> Note: drawing functions up to `0.7.1` has now moved to [`@daeinc/draw`](https://github.com/cdaein/draw).
 
 ### createCanvas
 
