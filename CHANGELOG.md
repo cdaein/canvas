@@ -1,5 +1,11 @@
 # Changelog
 
+## `0.10.0`
+
+- Add: new `mode` argument that creates `2d` or `webgl` context
+- Add: `demo-webgl.ts`
+- Update: `demo-2d` accordingly
+
 ## `0.8.0`
 
 - moved all drawing functions to `@daeinc/draw`.
