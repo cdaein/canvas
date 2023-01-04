@@ -68,7 +68,7 @@ const resizeCanvas = ({ canvas, mode, width, height, pixelRatio = 1, scaleContex
         if (scaleContext)
             context.scale(pixelRatio, pixelRatio);
     }
-    else {
+    else if (mode === "webgl") {
         // webgl
         context = canvas.getContext("webgl");
         gl = context;
@@ -80,6 +80,9 @@ const resizeCanvas = ({ canvas, mode, width, height, pixelRatio = 1, scaleContex
         else {
             gl.viewport(0, 0, width, height);
         }
+    }
+    else {
+        throw new Error(`${mode} is not supported`);
     }
     if (context) {
         return { canvas, context, gl, width, height };

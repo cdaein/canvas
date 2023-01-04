@@ -100,7 +100,7 @@ export const resizeCanvas = ({
     context = canvas.getContext("2d") as CanvasRenderingContext2D;
     if (!context) throw new Error("2d context cannot be created");
     if (scaleContext) context.scale(pixelRatio, pixelRatio);
-  } else {
+  } else if (mode === "webgl") {
     // webgl
     context = canvas.getContext("webgl") as WebGLRenderingContext;
     gl = context;
@@ -110,6 +110,8 @@ export const resizeCanvas = ({
     } else {
       gl.viewport(0, 0, width, height);
     }
+  } else {
+    throw new Error(`${mode} is not supported`);
   }
 
   if (context) {
