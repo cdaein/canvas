@@ -5,18 +5,30 @@ const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
+// return type assertion is needed as context may be '2d' or 'webgl'
 const {
   canvas,
   context: ctx,
+  gl,
   width: w,
   height: h,
 } = createCanvas({
   // parent: "div#test",
+  mode: "2d",
   width: window.innerWidth,
   height: window.innerHeight,
-  pixelRatio: 2,
+  pixelRatio: window.devicePixelRatio,
   scaleContext: true,
-});
+}) as {
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  gl: WebGLRenderingContext;
+  width: number;
+  height: number;
+};
+
+// gl is only available with webgl mode
+console.log(gl);
 
 // console.log(canvas.width, canvas.height);
 // console.log(w, h);
@@ -36,7 +48,7 @@ const draw = (width: number, height: number, count: number) => {
   ctx.font = `${50 + Math.sin(count * 0.01) * 30}px serif`;
   ctx.textAlign = `center`;
   ctx.fillStyle = `black`;
-  drawFillText(ctx, "TEXT", [width / 2, height / 2]);
+  drawFillText(ctx, "2D Canvas", [width / 2, height / 2]);
   ctx.fill();
 };
 
@@ -52,12 +64,11 @@ loop();
 
 // respond to resize event
 window.addEventListener("resize", () => {
-  const { width: w, height: h } = resizeCanvas({
+  ({ width, height } = resizeCanvas({
     canvas,
+    mode: "2d",
     width: window.innerWidth,
     height: window.innerHeight,
     pixelRatio: 2,
-  });
-  width = w;
-  height = h;
+  }));
 });
