@@ -28,7 +28,7 @@ const {
 };
 
 // gl is only available with webgl mode
-console.log(gl);
+console.log(gl === undefined);
 
 // console.log(canvas.width, canvas.height);
 // console.log(w, h);

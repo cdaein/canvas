@@ -1,4 +1,4 @@
-import { toDomElement } from "@daeinc/dom";
+import { appendChild, toDomElement } from "@daeinc/dom";
 
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
@@ -33,14 +33,16 @@ export const createCanvas = ({
   const canvas = document.createElement("canvas");
 
   // if parent
-  let canvasParentElement: Element;
-  if (parent !== undefined) {
-    canvasParentElement = toDomElement(parent);
-    canvasParentElement.appendChild(canvas);
-  } else {
-    // if no parent, append to body
-    document.body.appendChild(canvas);
-  }
+  appendChild(parent, canvas);
+
+  // let canvasParentElement: Element;
+  // if (parent !== undefined) {
+  //   canvasParentElement = toDomElement(parent);
+  //   canvasParentElement.appendChild(canvas);
+  // } else {
+  //   // if no parent, append to body
+  //   document.body.appendChild(canvas);
+  // }
 
   return resizeCanvas({
     canvas,
