@@ -11,7 +11,7 @@
  * @returns object - { canvas, context, gl?, width, height }
 
  */
-export declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleContext, }: {
+declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleContext, }: {
     parent?: string | Element | undefined;
     mode?: "2d" | "webgl" | undefined;
     width: number;
@@ -39,7 +39,7 @@ export declare const createCanvas: ({ parent, mode, width, height, pixelRatio, s
  * @param opts.scaleContext - default:true
  * @returns object - { canvas, context, gl?, width, height }
  */
-export declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleContext, }: {
+declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleContext, }: {
     canvas: HTMLCanvasElement;
     mode: "2d" | "webgl";
     width: number;
@@ -53,3 +53,29 @@ export declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, s
     width: number;
     height: number;
 };
+/**
+ * use existing canvas and set it up. (add to parent if any, set up size for canvas and canvas.style)
+ * it does not call getContext() to make it easy to use with other libraries that have their own context setup.
+ *
+ * @param opts - options object
+ * @param opts.parent - parent string or Element
+ * @param opts.canvas - canvas to set up
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default:1
+ * @returns object - { canvas, width, height, pixelRatio }
+ */
+declare const setupCanvas: ({ parent, canvas, width, height, pixelRatio, }: {
+    parent?: string | Element | undefined;
+    canvas: HTMLCanvasElement;
+    width: number;
+    height: number;
+    pixelRatio?: number | undefined;
+}) => {
+    canvas: HTMLCanvasElement;
+    width: number;
+    height: number;
+    pixelRatio: number;
+};
+
+export { createCanvas, resizeCanvas, setupCanvas };
