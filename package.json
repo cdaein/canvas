@@ -4,6 +4,7 @@
   "description": "Canvas utilities",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
+  "type": "module",
   "files": [
     "/dist"
   ],
@@ -11,7 +12,7 @@
     "watch": "tsc --watch",
     "test": "jest --watch",
     "demo": "parcel ./demo/demo.html --no-source-maps --no-cache --dist-dir ./demo/build/",
-    "build": "tsc --build --clean && tsc --build"
+    "build": "tsup"
   },
   "author": "Daeinc",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "jest": "^29.3.1",
     "jest-canvas-mock": "^2.4.0",
     "jest-environment-jsdom": "^29.3.1",
-    "ts-jest": "^29.0.3"
+    "ts-jest": "^29.0.3",
+    "tsup": "^6.5.0"
   },
   "publishConfig": {
     "access": "public",
