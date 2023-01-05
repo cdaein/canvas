@@ -127,7 +127,13 @@ export const resizeCanvas = ({
  * use existing canvas and set it up. (add to parent if any, set up size for canvas and canvas.style)
  * it does not call getContext() to make it easy to use with other libraries that have their own context setup.
  *
- * @param param0
+ * @param opts - options object
+ * @param opts.parent - parent string or Element
+ * @param opts.canvas - canvas to set up
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default:1
+ * @returns object - { canvas, width, height, pixelRatio }
  */
 export const setupCanvas = ({
   parent,
@@ -141,7 +147,12 @@ export const setupCanvas = ({
   width: number;
   height: number;
   pixelRatio?: number;
-}) => {
+}): {
+  canvas: HTMLCanvasElement;
+  width: number;
+  height: number;
+  pixelRatio: number;
+} => {
   if (pixelRatio <= 0) throw new Error("pixelRatio must be great than 0");
 
   // if parent
