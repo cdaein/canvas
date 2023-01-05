@@ -5,17 +5,20 @@ parent.id = "app";
 document.body.appendChild(parent);
 
 // return type assertion is needed as context may be '2d' or 'webgl'
-const { canvas, gl, width, height } = createCanvas({
+const { canvas, context, gl, width, height } = createCanvas({
   mode: "webgl",
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,
 }) as {
   canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
   gl: WebGLRenderingContext;
   width: number;
   height: number;
 };
+
+console.log(context);
 
 console.log({ width, height });
 
