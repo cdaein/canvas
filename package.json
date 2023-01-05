@@ -16,7 +16,7 @@
   "author": "Daeinc",
   "license": "MIT",
   "dependencies": {
-    "@daeinc/dom": "^0.2.0"
+    "@daeinc/dom": "^0.3.1"
   },
   "devDependencies": {
     "@daeinc/draw": "^0.2.1",
