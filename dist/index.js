@@ -20,15 +20,15 @@ const createCanvas = ({ parent, mode = "2d", width, height, pixelRatio = 1, scal
         throw new Error("pixelRatio must be great than 0");
     const canvas = document.createElement("canvas");
     // if parent
-    let canvasParentElement;
-    if (parent !== undefined) {
-        canvasParentElement = (0, dom_1.toDomElement)(parent);
-        canvasParentElement.appendChild(canvas);
-    }
-    else {
-        // if no parent, append to body
-        document.body.appendChild(canvas);
-    }
+    (0, dom_1.appendChild)(parent, canvas);
+    // let canvasParentElement: Element;
+    // if (parent !== undefined) {
+    //   canvasParentElement = toDomElement(parent);
+    //   canvasParentElement.appendChild(canvas);
+    // } else {
+    //   // if no parent, append to body
+    //   document.body.appendChild(canvas);
+    // }
     return (0, exports.resizeCanvas)({
         canvas,
         mode,
