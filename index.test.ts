@@ -2,7 +2,7 @@ import { describe, expect, test } from "@jest/globals";
 import "jest-canvas-mock";
 import { createCanvas, resizeCanvas } from ".";
 
-describe("createCanvas()", () => {
+describe("createCanvas() in 2d mode", () => {
   const { canvas, context } = createCanvas({
     width: 500,
     height: 500,
@@ -31,11 +31,12 @@ describe("createCanvas()", () => {
   });
 });
 
-describe("createCanvas() with parent", () => {
+describe("createCanvas() with parent in 2d mode", () => {
   const parent = document.createElement("div");
   parent.id = "canvas-container";
   const { canvas } = createCanvas({
     parent,
+    mode: "2d",
     width: 500,
     height: 500,
   });
@@ -48,10 +49,11 @@ describe("createCanvas() with parent", () => {
   });
 });
 
-describe("createCanvas() with pixelRatio=1", () => {
+describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
   const w = 500;
   const h = 300;
   const { canvas, context, width, height } = createCanvas({
+    mode: "2d",
     width: w,
     height: h,
     pixelRatio: 1,
@@ -68,13 +70,13 @@ describe("createCanvas() with pixelRatio=1", () => {
   });
 
   test("scales context correctly (1, 1)", () => {
-    const mat = context.getTransform();
+    const mat = (context as CanvasRenderingContext2D).getTransform();
     expect(mat.a).toEqual(1); // x scale
     expect(mat.d).toEqual(1); // y scale
   });
 });
 
-describe("createCanvas() with pixelRatio=2", () => {
+describe("createCanvas() with pixelRatio=2 in 2d mode", () => {
   const w = 500;
   const h = 300;
   const { canvas, context, width, height } = createCanvas({
@@ -94,13 +96,13 @@ describe("createCanvas() with pixelRatio=2", () => {
   });
 
   test("scales context correctly (2, 2)", () => {
-    const mat = context.getTransform();
+    const mat = (context as CanvasRenderingContext2D).getTransform();
     expect(mat.a).toEqual(2); // x scale
     expect(mat.d).toEqual(2); // y scale
   });
 });
 
-describe("createCanvas() with pixelRatio=2 & scaleContext=false", () => {
+describe("createCanvas() with pixelRatio=2 & scaleContext=false in 2d mode", () => {
   const w = 500;
   const h = 300;
   const { canvas, context, width, height } = createCanvas({
@@ -111,7 +113,7 @@ describe("createCanvas() with pixelRatio=2 & scaleContext=false", () => {
   });
 
   test("does not scale context", () => {
-    const mat = context.getTransform();
+    const mat = (context as CanvasRenderingContext2D).getTransform();
     expect(mat.a).toEqual(1);
     expect(mat.d).toEqual(1);
   });
