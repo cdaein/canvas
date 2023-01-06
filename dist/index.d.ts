@@ -39,6 +39,7 @@ declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleCon
  * @param opts.height
  * @param opts.pixelRatio - default:1
  * @param opts.scaleContext - default:true
+ * @param opts.attributes
  * @returns object - { canvas, context, gl?, width, height }
  */
 declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleContext, attributes, }: {

@@ -10,6 +10,9 @@ const { canvas, context, gl, width, height } = createCanvas({
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,
+  attributes: {
+    preserveDrawingBuffer: true,
+  },
 }) as {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
@@ -19,6 +22,8 @@ const { canvas, context, gl, width, height } = createCanvas({
 };
 
 console.log(context);
+
+console.log(context.getContextAttributes());
 
 console.log({ width, height });
 

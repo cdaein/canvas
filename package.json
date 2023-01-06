@@ -17,10 +17,11 @@
   "author": "Daeinc",
   "license": "MIT",
   "dependencies": {
-    "@daeinc/dom": "^0.3.1"
+    "@daeinc/dom": "^0.4.1"
   },
   "devDependencies": {
     "@daeinc/draw": "^0.2.1",
+    "babel-jest": "^29.3.1",
     "jest": "^29.3.1",
     "jest-canvas-mock": "^2.4.0",
     "jest-environment-jsdom": "^29.3.1",

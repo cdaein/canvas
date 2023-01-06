@@ -1,4 +1,4 @@
-import { appendChild, toDomElement } from "@daeinc/dom";
+import { appendChild } from "@daeinc/dom";
 
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
@@ -38,8 +38,6 @@ export const createCanvas = ({
   // if parent
   appendChild(parent, canvas);
 
-  console.log(attributes);
-
   // let canvasParentElement: Element;
   // if (parent !== undefined) {
   //   canvasParentElement = toDomElement(parent);
@@ -72,6 +70,7 @@ export const createCanvas = ({
  * @param opts.height
  * @param opts.pixelRatio - default:1
  * @param opts.scaleContext - default:true
+ * @param opts.attributes
  * @returns object - { canvas, context, gl?, width, height }
  */
 export const resizeCanvas = ({

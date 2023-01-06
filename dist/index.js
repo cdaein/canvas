@@ -14,7 +14,6 @@ var createCanvas = ({
     throw new Error("pixelRatio must be great than 0");
   const canvas = document.createElement("canvas");
   appendChild(parent, canvas);
-  console.log(attributes);
   return resizeCanvas({
     canvas,
     mode,

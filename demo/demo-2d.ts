@@ -15,10 +15,13 @@ const {
 } = createCanvas({
   // parent: "div#test",
   mode: "2d",
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: 500,
+  height: 500,
   pixelRatio: window.devicePixelRatio,
   scaleContext: true,
+  attributes: {
+    alpha: false,
+  },
 }) as {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
@@ -30,6 +33,8 @@ const {
 // gl is only available with webgl mode
 console.log(gl === undefined);
 
+console.log(ctx.getContextAttributes());
+
 // console.log(canvas.width, canvas.height);
 // console.log(w, h);
 
@@ -37,8 +42,8 @@ let width = w;
 let height = h;
 
 const draw = (width: number, height: number, count: number) => {
-  ctx.fillStyle = `gray`;
-  ctx.fillRect(0, 0, width, height);
+  // ctx.fillStyle = `gray`;
+  // ctx.fillRect(0, 0, width, height);
 
   drawCircle(ctx, [width / 2, height / 2], 250);
   ctx.fillStyle = `white`;
