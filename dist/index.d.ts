@@ -2,22 +2,24 @@
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
  *
  * @param {object.<string,any>} opts - obtions object
- * @param {string | Element} opts.parent - parent string or element
- * @param {"2d" | "webgl"} opts.mode - which context to use
- * @param {number} opts.width
- * @param {number} opts.height
- * @param {number} opts.pixelRatio - default: 1
- * @param {boolean} opts.scaleContext - scale context to keep shape sizes consistent. default: true.
+ * @param opts.parent - parent string or element
+ * @param opts.mode - which context to use
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default: 1
+ * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
+ * @param opts.attributes - context attributes
  * @returns object - { canvas, context, gl?, width, height }
 
  */
-declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleContext, }: {
+declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleContext, attributes, }: {
     parent?: string | Element | undefined;
     mode?: "2d" | "webgl" | undefined;
     width: number;
     height: number;
     pixelRatio?: number | undefined;
     scaleContext?: boolean | undefined;
+    attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
 }) => {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D | WebGLRenderingContext;
@@ -39,13 +41,14 @@ declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleCon
  * @param opts.scaleContext - default:true
  * @returns object - { canvas, context, gl?, width, height }
  */
-declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleContext, }: {
+declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleContext, attributes, }: {
     canvas: HTMLCanvasElement;
     mode: "2d" | "webgl";
     width: number;
     height: number;
     pixelRatio?: number | undefined;
     scaleContext?: boolean | undefined;
+    attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
 }) => {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D | WebGLRenderingContext;

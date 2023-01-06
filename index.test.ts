@@ -31,6 +31,31 @@ describe("createCanvas() in 2d mode", () => {
   });
 });
 
+describe("createCanvas() with attributes in 2d mode", () => {
+  // {
+  //   alpha: false,
+  //   colorSpace: "srgb",
+  //   desynchronized: false,
+  //   willReadFrequently: false,
+  // };
+  // ctx.getContextAttributes();
+
+  const { canvas, context } = createCanvas({
+    width: 500,
+    height: 500,
+    attributes: {
+      alpha: true,
+    },
+  });
+
+  const attributes =
+    context.getContextAttributes() as CanvasRenderingContext2DSettings;
+
+  test("updates {alpha} attrubute", () => {
+    expect(attributes.alpha).toBe(true);
+  });
+});
+
 describe("createCanvas() with parent in 2d mode", () => {
   const parent = document.createElement("div");
   parent.id = "canvas-container";
@@ -117,4 +142,18 @@ describe("createCanvas() with pixelRatio=2 & scaleContext=false in 2d mode", () 
     expect(mat.a).toEqual(1);
     expect(mat.d).toEqual(1);
   });
+});
+
+describe("createCanvas() in webgl mode", () => {
+  // {
+  //   alpha: true,
+  //   antialias: true,
+  //   depth: true,
+  //   failIfMajorPerformanceCaveat: false,
+  //   powerPreference: "default",
+  //   premultipliedAlpha: true,
+  //   preserveDrawingBuffer: false,
+  //   stencil: false,
+  //   desynchronized: false
+  // }
 });

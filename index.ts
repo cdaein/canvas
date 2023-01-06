@@ -4,12 +4,13 @@ import { appendChild, toDomElement } from "@daeinc/dom";
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
  *
  * @param {object.<string,any>} opts - obtions object
- * @param {string | Element} opts.parent - parent string or element
- * @param {"2d" | "webgl"} opts.mode - which context to use
- * @param {number} opts.width
- * @param {number} opts.height
- * @param {number} opts.pixelRatio - default: 1
- * @param {boolean} opts.scaleContext - scale context to keep shape sizes consistent. default: true.
+ * @param opts.parent - parent string or element
+ * @param opts.mode - which context to use
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default: 1
+ * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
+ * @param opts.attributes - context attributes
  * @returns object - { canvas, context, gl?, width, height }
 
  */
@@ -20,6 +21,7 @@ export const createCanvas = ({
   height,
   pixelRatio = 1,
   scaleContext = true,
+  attributes,
 }: {
   parent?: string | Element;
   mode?: "2d" | "webgl";
@@ -27,6 +29,7 @@ export const createCanvas = ({
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
+  attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }) => {
   if (pixelRatio <= 0) throw new Error("pixelRatio must be great than 0");
 
@@ -34,6 +37,8 @@ export const createCanvas = ({
 
   // if parent
   appendChild(parent, canvas);
+
+  console.log(attributes);
 
   // let canvasParentElement: Element;
   // if (parent !== undefined) {
@@ -51,6 +56,7 @@ export const createCanvas = ({
     height,
     pixelRatio,
     scaleContext,
+    attributes,
   });
 };
 
@@ -75,6 +81,7 @@ export const resizeCanvas = ({
   height,
   pixelRatio = 1,
   scaleContext = true,
+  attributes,
 }: {
   canvas: HTMLCanvasElement;
   mode: "2d" | "webgl";
@@ -82,6 +89,7 @@ export const resizeCanvas = ({
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
+  attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }): {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D | WebGLRenderingContext;
@@ -99,12 +107,12 @@ export const resizeCanvas = ({
 
   if (mode === "2d") {
     // 2d
-    context = canvas.getContext("2d") as CanvasRenderingContext2D;
+    context = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
     if (!context) throw new Error("2d context cannot be created");
     if (scaleContext) context.scale(pixelRatio, pixelRatio);
   } else if (mode === "webgl") {
     // webgl
-    context = canvas.getContext("webgl") as WebGLRenderingContext;
+    context = canvas.getContext("webgl", attributes) as WebGLRenderingContext;
     gl = context;
     if (!context) throw new Error("webgl context cannot be created");
     if (scaleContext) {

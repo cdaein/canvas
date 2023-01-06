@@ -7,19 +7,22 @@ var createCanvas = ({
   width,
   height,
   pixelRatio = 1,
-  scaleContext = true
+  scaleContext = true,
+  attributes
 }) => {
   if (pixelRatio <= 0)
     throw new Error("pixelRatio must be great than 0");
   const canvas = document.createElement("canvas");
   appendChild(parent, canvas);
+  console.log(attributes);
   return resizeCanvas({
     canvas,
     mode,
     width,
     height,
     pixelRatio,
-    scaleContext
+    scaleContext,
+    attributes
   });
 };
 var resizeCanvas = ({
@@ -28,7 +31,8 @@ var resizeCanvas = ({
   width,
   height,
   pixelRatio = 1,
-  scaleContext = true
+  scaleContext = true,
+  attributes
 }) => {
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
@@ -37,13 +41,13 @@ var resizeCanvas = ({
   let context;
   let gl;
   if (mode === "2d") {
-    context = canvas.getContext("2d");
+    context = canvas.getContext("2d", attributes);
     if (!context)
       throw new Error("2d context cannot be created");
     if (scaleContext)
       context.scale(pixelRatio, pixelRatio);
   } else if (mode === "webgl") {
-    context = canvas.getContext("webgl");
+    context = canvas.getContext("webgl", attributes);
     gl = context;
     if (!context)
       throw new Error("webgl context cannot be created");
