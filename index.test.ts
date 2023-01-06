@@ -33,10 +33,10 @@ describe("createCanvas() in 2d mode", () => {
 
 describe("createCanvas() with attributes in 2d mode", () => {
   // {
-  //   alpha: false,
-  //   colorSpace: "srgb",
-  //   desynchronized: false,
-  //   willReadFrequently: false,
+  //   alpha,
+  //   colorSpace,
+  //   desynchronized,
+  //   willReadFrequently,
   // };
   // ctx.getContextAttributes();
 
@@ -146,14 +146,14 @@ describe("createCanvas() with pixelRatio=2 & scaleContext=false in 2d mode", () 
 
 describe("createCanvas() in webgl mode", () => {
   // {
-  //   alpha: true,
-  //   antialias: true,
-  //   depth: true,
-  //   failIfMajorPerformanceCaveat: false,
-  //   powerPreference: "default",
-  //   premultipliedAlpha: true,
-  //   preserveDrawingBuffer: false,
-  //   stencil: false,
-  //   desynchronized: false
+  //   alpha,
+  //   antialias,
+  //   depth,
+  //   failIfMajorPerformanceCaveat,
+  //   powerPreference,
+  //   premultipliedAlpha,
+  //   preserveDrawingBuffer,
+  //   stencil,
+  //   desynchronized
   // }
 });
