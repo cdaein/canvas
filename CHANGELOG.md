@@ -1,5 +1,10 @@
 # Changelog
 
+## `0.13.0`
+
+- `mode` property is now `context`
+- added `webgl2` context
+
 ## `0.10.0`
 
 - Add: new `mode` argument that creates `2d` or `webgl` context
