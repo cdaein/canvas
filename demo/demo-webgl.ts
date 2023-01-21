@@ -6,7 +6,7 @@ document.body.appendChild(parent);
 
 // return type assertion is needed as context may be '2d' or 'webgl'
 const { canvas, context, gl, width, height } = createCanvas({
-  mode: "webgl",
+  context: "webgl",
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,

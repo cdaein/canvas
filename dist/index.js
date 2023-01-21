@@ -3,20 +3,18 @@ import { appendChild } from '@daeinc/dom';
 // index.ts
 var createCanvas = ({
   parent,
-  mode = "2d",
+  context = "2d",
   width,
   height,
   pixelRatio = 1,
   scaleContext = true,
   attributes
 }) => {
-  if (pixelRatio <= 0)
-    throw new Error("pixelRatio must be great than 0");
   const canvas = document.createElement("canvas");
   appendChild(parent, canvas);
   return resizeCanvas({
     canvas,
-    mode,
+    context,
     width,
     height,
     pixelRatio,
@@ -26,7 +24,7 @@ var createCanvas = ({
 };
 var resizeCanvas = ({
   canvas,
-  mode,
+  context,
   width,
   height,
   pixelRatio = 1,
@@ -37,31 +35,41 @@ var resizeCanvas = ({
   canvas.height = height * pixelRatio;
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
-  let context;
+  let ctx;
   let gl;
-  if (mode === "2d") {
-    context = canvas.getContext("2d", attributes);
-    if (!context)
+  if (context === "2d") {
+    ctx = canvas.getContext("2d", attributes);
+    if (!ctx)
       throw new Error("2d context cannot be created");
     if (scaleContext)
-      context.scale(pixelRatio, pixelRatio);
-  } else if (mode === "webgl") {
-    context = canvas.getContext("webgl", attributes);
-    gl = context;
-    if (!context)
+      ctx.scale(pixelRatio, pixelRatio);
+  } else if (context === "webgl") {
+    ctx = canvas.getContext("webgl", attributes);
+    gl = ctx;
+    if (!ctx)
       throw new Error("webgl context cannot be created");
     if (scaleContext) {
       gl.viewport(0, 0, width * pixelRatio, height * pixelRatio);
     } else {
       gl.viewport(0, 0, width, height);
     }
+  } else if (context === "webgl2") {
+    ctx = canvas.getContext("webgl2", attributes);
+    gl = ctx;
+    if (!ctx)
+      throw new Error("webgl2 context cannot be created");
+    if (scaleContext) {
+      gl.viewport(0, 0, width * pixelRatio, height * pixelRatio);
+    } else {
+      gl.viewport(0, 0, width, height);
+    }
   } else {
-    throw new Error(`${mode} is not supported`);
+    throw new Error(`${context} is not supported`);
   }
-  if (context) {
-    return { canvas, context, gl, width, height };
+  if (ctx) {
+    return { canvas, context: ctx, gl, width, height };
   } else {
-    throw new Error(`${mode} context could not be created`);
+    throw new Error(`${context} context could not be created`);
   }
 };
 var setupCanvas = ({

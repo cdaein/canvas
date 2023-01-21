@@ -61,7 +61,7 @@ describe("createCanvas() with parent in 2d mode", () => {
   parent.id = "canvas-container";
   const { canvas } = createCanvas({
     parent,
-    mode: "2d",
+    context: "2d",
     width: 500,
     height: 500,
   });
@@ -78,7 +78,7 @@ describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
   const w = 500;
   const h = 300;
   const { canvas, context, width, height } = createCanvas({
-    mode: "2d",
+    context: "2d",
     width: w,
     height: h,
     pixelRatio: 1,

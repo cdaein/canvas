@@ -14,7 +14,7 @@ const {
   height: h,
 } = createCanvas({
   // parent: "div#test",
-  mode: "2d",
+  context: "2d",
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,
@@ -71,7 +71,7 @@ loop();
 window.addEventListener("resize", () => {
   ({ width, height } = resizeCanvas({
     canvas,
-    mode: "2d",
+    context: "2d",
     width: window.innerWidth,
     height: window.innerHeight,
     pixelRatio: 2,

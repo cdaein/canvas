@@ -3,7 +3,7 @@
  *
  * @param {object.<string,any>} opts - obtions object
  * @param opts.parent - parent string or element
- * @param opts.mode - which context to use
+ * @param opts.context - which context to use
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default: 1
@@ -12,9 +12,9 @@
  * @returns object - { canvas, context, gl?, width, height }
 
  */
-declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleContext, attributes, }: {
+declare const createCanvas: ({ parent, context, width, height, pixelRatio, scaleContext, attributes, }: {
     parent?: string | Element | undefined;
-    mode?: "2d" | "webgl" | undefined;
+    context?: "2d" | "webgl" | "webgl2" | undefined;
     width: number;
     height: number;
     pixelRatio?: number | undefined;
@@ -22,19 +22,17 @@ declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleCon
     attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
 }) => {
     canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D | WebGLRenderingContext;
-    gl?: WebGLRenderingContext | undefined;
+    context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext;
+    gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
     width: number;
     height: number;
 };
 /**
  * Resize canvas with given pixelRatio.
  *
- * TODO: add webgl2 context
- *
  * @param opts - options object
  * @param opts.canvas - canvas to resize
- * @param opts.mode - which context to use
+ * @param opts.context - which context to use
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default:1
@@ -42,9 +40,9 @@ declare const createCanvas: ({ parent, mode, width, height, pixelRatio, scaleCon
  * @param opts.attributes
  * @returns object - { canvas, context, gl?, width, height }
  */
-declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleContext, attributes, }: {
+declare const resizeCanvas: ({ canvas, context, width, height, pixelRatio, scaleContext, attributes, }: {
     canvas: HTMLCanvasElement;
-    mode: "2d" | "webgl";
+    context: "2d" | "webgl" | "webgl2";
     width: number;
     height: number;
     pixelRatio?: number | undefined;
@@ -52,8 +50,8 @@ declare const resizeCanvas: ({ canvas, mode, width, height, pixelRatio, scaleCon
     attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
 }) => {
     canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D | WebGLRenderingContext;
-    gl?: WebGLRenderingContext | undefined;
+    context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext;
+    gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
     width: number;
     height: number;
 };

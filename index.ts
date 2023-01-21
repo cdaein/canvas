@@ -5,7 +5,7 @@ import { appendChild } from "@daeinc/dom";
  *
  * @param {object.<string,any>} opts - obtions object
  * @param opts.parent - parent string or element
- * @param opts.mode - which context to use
+ * @param opts.context - which context to use
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default: 1
@@ -16,7 +16,7 @@ import { appendChild } from "@daeinc/dom";
  */
 export const createCanvas = ({
   parent,
-  mode = "2d",
+  context = "2d",
   width,
   height,
   pixelRatio = 1,
@@ -24,32 +24,23 @@ export const createCanvas = ({
   attributes,
 }: {
   parent?: string | Element;
-  mode?: "2d" | "webgl";
+  context?: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }) => {
-  if (pixelRatio <= 0) throw new Error("pixelRatio must be great than 0");
+  // if (pixelRatio <= 0) throw new Error("pixelRatio must be great than 0");
 
   const canvas = document.createElement("canvas");
 
   // if parent
   appendChild(parent, canvas);
 
-  // let canvasParentElement: Element;
-  // if (parent !== undefined) {
-  //   canvasParentElement = toDomElement(parent);
-  //   canvasParentElement.appendChild(canvas);
-  // } else {
-  //   // if no parent, append to body
-  //   document.body.appendChild(canvas);
-  // }
-
   return resizeCanvas({
     canvas,
-    mode,
+    context,
     width,
     height,
     pixelRatio,
@@ -61,11 +52,9 @@ export const createCanvas = ({
 /**
  * Resize canvas with given pixelRatio.
  *
- * TODO: add webgl2 context
- *
  * @param opts - options object
  * @param opts.canvas - canvas to resize
- * @param opts.mode - which context to use
+ * @param opts.context - which context to use
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default:1
@@ -75,7 +64,7 @@ export const createCanvas = ({
  */
 export const resizeCanvas = ({
   canvas,
-  mode,
+  context,
   width,
   height,
   pixelRatio = 1,
@@ -83,7 +72,7 @@ export const resizeCanvas = ({
   attributes,
 }: {
   canvas: HTMLCanvasElement;
-  mode: "2d" | "webgl";
+  context: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
   pixelRatio?: number;
@@ -91,8 +80,11 @@ export const resizeCanvas = ({
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }): {
   canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D | WebGLRenderingContext;
-  gl?: WebGLRenderingContext;
+  context:
+    | CanvasRenderingContext2D
+    | WebGLRenderingContext
+    | WebGL2RenderingContext;
+  gl?: WebGLRenderingContext | WebGL2RenderingContext;
   width: number;
   height: number;
 } => {
@@ -101,32 +93,46 @@ export const resizeCanvas = ({
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
 
-  let context: CanvasRenderingContext2D | WebGLRenderingContext | null;
+  let ctx:
+    | CanvasRenderingContext2D
+    | WebGLRenderingContext
+    | WebGL2RenderingContext
+    | null;
   let gl;
 
-  if (mode === "2d") {
+  if (context === "2d") {
     // 2d
-    context = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
-    if (!context) throw new Error("2d context cannot be created");
-    if (scaleContext) context.scale(pixelRatio, pixelRatio);
-  } else if (mode === "webgl") {
+    ctx = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
+    if (!ctx) throw new Error("2d context cannot be created");
+    if (scaleContext) ctx.scale(pixelRatio, pixelRatio);
+  } else if (context === "webgl") {
     // webgl
-    context = canvas.getContext("webgl", attributes) as WebGLRenderingContext;
-    gl = context;
-    if (!context) throw new Error("webgl context cannot be created");
+    ctx = canvas.getContext("webgl", attributes) as WebGLRenderingContext;
+    gl = ctx;
+    if (!ctx) throw new Error("webgl context cannot be created");
+    if (scaleContext) {
+      gl.viewport(0, 0, width * pixelRatio, height * pixelRatio);
+    } else {
+      gl.viewport(0, 0, width, height);
+    }
+  } else if (context === "webgl2") {
+    // webgl2
+    ctx = canvas.getContext("webgl2", attributes) as WebGL2RenderingContext;
+    gl = ctx;
+    if (!ctx) throw new Error("webgl2 context cannot be created");
     if (scaleContext) {
       gl.viewport(0, 0, width * pixelRatio, height * pixelRatio);
     } else {
       gl.viewport(0, 0, width, height);
     }
   } else {
-    throw new Error(`${mode} is not supported`);
+    throw new Error(`${context} is not supported`);
   }
 
-  if (context) {
-    return { canvas, context, gl, width, height };
+  if (ctx) {
+    return { canvas, context: ctx, gl, width, height };
   } else {
-    throw new Error(`${mode} context could not be created`);
+    throw new Error(`${context} context could not be created`);
   }
 };
 
