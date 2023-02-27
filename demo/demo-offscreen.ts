@@ -53,13 +53,13 @@ const {
   },
 }) as {
   canvas: OffscreenCanvas;
-  context: CanvasRenderingContext2D;
+  context: OffscreenCanvasRenderingContext2D;
   width: number;
   height: number;
 };
 
 const draw = (
-  ctx: CanvasRenderingContext2D,
+  ctx: OffscreenCanvasRenderingContext2D,
   width: number,
   height: number,
   count: number
@@ -67,7 +67,11 @@ const draw = (
   ctx.fillStyle = `gray`;
   ctx.fillRect(0, 0, width, height);
 
-  drawCircle(ctx, [width / 2, height / 2], 250);
+  drawCircle(
+    ctx as unknown as CanvasRenderingContext2D,
+    [width / 2, height / 2],
+    250
+  );
   ctx.fillStyle = `white`;
   ctx.fill();
 
@@ -75,7 +79,10 @@ const draw = (
   ctx.font = `${50 + Math.sin(count * 0.01) * 30}px serif`;
   ctx.textAlign = `center`;
   ctx.fillStyle = `black`;
-  drawFillText(ctx, "2D Canvas", [width / 2, height / 2]);
+  drawFillText(ctx as unknown as CanvasRenderingContext2D, "2D Canvas", [
+    width / 2,
+    height / 2,
+  ]);
   ctx.fill();
 };
 

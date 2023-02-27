@@ -50,6 +50,9 @@ export const createCanvas = ({
 };
 
 /**
+ * create an OffscreenCanvas and context.
+ *
+ * TODO: support bitmaprenderer
  *
  * @param opts.context
  * @param opts.width
@@ -67,7 +70,7 @@ export const createOffscreenCanvas = ({
   scaleContext = true,
   attributes,
 }: {
-  context: "2d" | "webgl" | "webgl2" | "bitmaprenderer";
+  context: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
   pixelRatio?: number;
@@ -112,7 +115,7 @@ export const resizeCanvas = ({
   attributes,
 }: {
   canvas: HTMLCanvasElement | OffscreenCanvas;
-  context: "2d" | "webgl" | "webgl2" | "bitmaprenderer";
+  context: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
   pixelRatio?: number;
@@ -123,7 +126,8 @@ export const resizeCanvas = ({
   context:
     | CanvasRenderingContext2D
     | WebGLRenderingContext
-    | WebGL2RenderingContext;
+    | WebGL2RenderingContext
+    | OffscreenCanvasRenderingContext2D;
   gl?: WebGLRenderingContext | WebGL2RenderingContext;
   width: number;
   height: number;
@@ -139,12 +143,21 @@ export const resizeCanvas = ({
     | CanvasRenderingContext2D
     | WebGLRenderingContext
     | WebGL2RenderingContext
+    | OffscreenCanvasRenderingContext2D
     | null;
   let gl;
 
   if (context === "2d") {
     // 2d
-    ctx = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
+    // REVIEW: when compiled to JS, this seems redundant?
+    if (canvas instanceof HTMLCanvasElement) {
+      ctx = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
+    } else {
+      ctx = canvas.getContext(
+        "2d",
+        attributes
+      ) as OffscreenCanvasRenderingContext2D;
+    }
     if (!ctx) throw new Error("2d context cannot be created");
     if (scaleContext) ctx.scale(pixelRatio, pixelRatio);
   } else if (context === "webgl") {
