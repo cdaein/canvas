@@ -50,6 +50,46 @@ export const createCanvas = ({
 };
 
 /**
+ *
+ * @param opts.context
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default: 1
+ * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
+ * @param opts.attributes - context attributes
+ * @returns
+ */
+export const createOffscreenCanvas = ({
+  context = "2d",
+  width,
+  height,
+  pixelRatio = 1,
+  scaleContext = true,
+  attributes,
+}: {
+  context: "2d" | "webgl" | "webgl2" | "bitmaprenderer";
+  width: number;
+  height: number;
+  pixelRatio?: number;
+  scaleContext?: boolean;
+  attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
+}) => {
+  const canvas = new OffscreenCanvas(width * pixelRatio, height * pixelRatio);
+
+  return resizeCanvas({
+    canvas,
+    context,
+    width,
+    height,
+    pixelRatio,
+    scaleContext,
+    attributes,
+  });
+};
+
+//
+
+/**
  * Resize canvas with given pixelRatio.
  *
  * @param opts - options object
@@ -71,15 +111,15 @@ export const resizeCanvas = ({
   scaleContext = true,
   attributes,
 }: {
-  canvas: HTMLCanvasElement;
-  context: "2d" | "webgl" | "webgl2";
+  canvas: HTMLCanvasElement | OffscreenCanvas;
+  context: "2d" | "webgl" | "webgl2" | "bitmaprenderer";
   width: number;
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }): {
-  canvas: HTMLCanvasElement;
+  canvas: HTMLCanvasElement | OffscreenCanvas;
   context:
     | CanvasRenderingContext2D
     | WebGLRenderingContext
@@ -90,8 +130,10 @@ export const resizeCanvas = ({
 } => {
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
+  if (canvas instanceof HTMLCanvasElement) {
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+  }
 
   let ctx:
     | CanvasRenderingContext2D

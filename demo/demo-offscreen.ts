@@ -1,11 +1,11 @@
-import { createCanvas, resizeCanvas } from "../index";
+import { createCanvas, createOffscreenCanvas, resizeCanvas } from "../index";
 import { drawCircle, drawFillText } from "@daeinc/draw";
 
 const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
-// return type assertion is needed as context may be '2d' or 'webgl'
+// main canvas
 const {
   canvas,
   context: ctx,
@@ -30,18 +30,40 @@ const {
   height: number;
 };
 
-// gl is only available with webgl mode
-console.log(gl === undefined);
-
-console.log(ctx.getContextAttributes());
-
-// console.log(canvas.width, canvas.height);
-// console.log(w, h);
-
 let width = w;
 let height = h;
 
-const draw = (width: number, height: number, count: number) => {
+// gl is only available with webgl mode
+console.assert(gl === undefined);
+console.log(ctx.getContextAttributes());
+
+// offscreen canvas
+const {
+  canvas: offCanvas,
+  context: offCtx,
+  width: offW,
+  height: offH,
+} = createOffscreenCanvas({
+  context: "2d",
+  width,
+  height,
+  pixelRatio: window.devicePixelRatio,
+  attributes: {
+    willReadFrequently: true,
+  },
+}) as {
+  canvas: OffscreenCanvas;
+  context: CanvasRenderingContext2D;
+  width: number;
+  height: number;
+};
+
+const draw = (
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  count: number
+) => {
   ctx.fillStyle = `gray`;
   ctx.fillRect(0, 0, width, height);
 
@@ -61,7 +83,12 @@ let count = 0;
 const loop = () => {
   window.requestAnimationFrame(loop);
 
-  draw(width, height, count);
+  // draw to offscreenCanvas
+  draw(offCtx, width, height, count);
+  // get offscren pixel data
+  const imageData = offCtx.getImageData(0, 0, width * 2, height * 2);
+  // draw onto main canvas
+  ctx.putImageData(imageData, 0, 0);
 
   count++;
 };
@@ -74,6 +101,14 @@ window.addEventListener("resize", () => {
     context: "2d",
     width: window.innerWidth,
     height: window.innerHeight,
-    pixelRatio: 2,
+    pixelRatio: window.devicePixelRatio,
   }));
+
+  resizeCanvas({
+    canvas: offCanvas,
+    context: "2d",
+    width: window.innerWidth,
+    height: window.innerHeight,
+    pixelRatio: window.devicePixelRatio,
+  });
 });

@@ -21,7 +21,31 @@ declare const createCanvas: ({ parent, context, width, height, pixelRatio, scale
     scaleContext?: boolean | undefined;
     attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
 }) => {
-    canvas: HTMLCanvasElement;
+    canvas: HTMLCanvasElement | OffscreenCanvas;
+    context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext;
+    gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
+    width: number;
+    height: number;
+};
+/**
+ *
+ * @param opts.context
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default: 1
+ * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
+ * @param opts.attributes - context attributes
+ * @returns
+ */
+declare const createOffscreenCanvas: ({ context, width, height, pixelRatio, scaleContext, attributes, }: {
+    context: "2d" | "webgl" | "webgl2" | "bitmaprenderer";
+    width: number;
+    height: number;
+    pixelRatio?: number | undefined;
+    scaleContext?: boolean | undefined;
+    attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
+}) => {
+    canvas: HTMLCanvasElement | OffscreenCanvas;
     context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext;
     gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
     width: number;
@@ -41,15 +65,15 @@ declare const createCanvas: ({ parent, context, width, height, pixelRatio, scale
  * @returns object - { canvas, context, gl?, width, height }
  */
 declare const resizeCanvas: ({ canvas, context, width, height, pixelRatio, scaleContext, attributes, }: {
-    canvas: HTMLCanvasElement;
-    context: "2d" | "webgl" | "webgl2";
+    canvas: HTMLCanvasElement | OffscreenCanvas;
+    context: "2d" | "webgl" | "webgl2" | "bitmaprenderer";
     width: number;
     height: number;
     pixelRatio?: number | undefined;
     scaleContext?: boolean | undefined;
     attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes | undefined;
 }) => {
-    canvas: HTMLCanvasElement;
+    canvas: HTMLCanvasElement | OffscreenCanvas;
     context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext;
     gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
     width: number;
@@ -80,4 +104,4 @@ declare const setupCanvas: ({ parent, canvas, width, height, pixelRatio, }: {
     pixelRatio: number;
 };
 
-export { createCanvas, resizeCanvas, setupCanvas };
+export { createCanvas, createOffscreenCanvas, resizeCanvas, setupCanvas };

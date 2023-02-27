@@ -22,6 +22,25 @@ var createCanvas = ({
     attributes
   });
 };
+var createOffscreenCanvas = ({
+  context = "2d",
+  width,
+  height,
+  pixelRatio = 1,
+  scaleContext = true,
+  attributes
+}) => {
+  const canvas = new OffscreenCanvas(width * pixelRatio, height * pixelRatio);
+  return resizeCanvas({
+    canvas,
+    context,
+    width,
+    height,
+    pixelRatio,
+    scaleContext,
+    attributes
+  });
+};
 var resizeCanvas = ({
   canvas,
   context,
@@ -33,8 +52,10 @@ var resizeCanvas = ({
 }) => {
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
+  if (canvas instanceof HTMLCanvasElement) {
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+  }
   let ctx;
   let gl;
   if (context === "2d") {
@@ -89,4 +110,4 @@ var setupCanvas = ({
   return { canvas, width, height, pixelRatio };
 };
 
-export { createCanvas, resizeCanvas, setupCanvas };
+export { createCanvas, createOffscreenCanvas, resizeCanvas, setupCanvas };
