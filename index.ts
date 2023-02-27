@@ -2,6 +2,8 @@ import { appendChild } from "@daeinc/dom";
 
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
+ * 
+ * TODO: add pixelated option
  *
  * @param {object.<string,any>} opts - obtions object
  * @param opts.parent - parent string or element
@@ -9,6 +11,7 @@ import { appendChild } from "@daeinc/dom";
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default: 1
+ * @param opts.pixelated - for 2d context
  * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
  * @param opts.attributes - context attributes
  * @param opts.offscreen - still uses a regular HTMLCanvasElement but will not attach to document.
@@ -21,6 +24,7 @@ export const createCanvas = ({
   width,
   height,
   pixelRatio = 1,
+  pixelated = false,
   scaleContext = true,
   attributes,
   offscreen = false,
@@ -30,6 +34,7 @@ export const createCanvas = ({
   width: number;
   height: number;
   pixelRatio?: number;
+  pixelated?: boolean;
   scaleContext?: boolean;
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
   offscreen?: boolean;
@@ -48,6 +53,7 @@ export const createCanvas = ({
     width,
     height,
     pixelRatio,
+    pixelated,
     scaleContext,
     attributes,
   });
@@ -57,11 +63,13 @@ export const createCanvas = ({
  * create an OffscreenCanvas and context.
  *
  * TODO: support bitmaprenderer
+ *       add pixelated option (and test)
  *
  * @param opts.context
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default: 1
+ * @param opts.pixelated - for 2d context
  * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
  * @param opts.attributes - context attributes
  * @returns
@@ -71,6 +79,7 @@ export const createOffscreenCanvas = ({
   width,
   height,
   pixelRatio = 1,
+  pixelated = false,
   scaleContext = true,
   attributes,
 }: {
@@ -78,6 +87,7 @@ export const createOffscreenCanvas = ({
   width: number;
   height: number;
   pixelRatio?: number;
+  pixelated?: boolean;
   scaleContext?: boolean;
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }) => {
@@ -89,6 +99,7 @@ export const createOffscreenCanvas = ({
     width,
     height,
     pixelRatio,
+    pixelated,
     scaleContext,
     attributes,
   });
@@ -99,12 +110,15 @@ export const createOffscreenCanvas = ({
 /**
  * Resize canvas with given pixelRatio.
  *
+ * TODO: add pixelated option
+ *
  * @param opts - options object
  * @param opts.canvas - canvas to resize
  * @param opts.context - which context to use
  * @param opts.width
  * @param opts.height
  * @param opts.pixelRatio - default:1
+ * @param opts.pixelated - for 2d context
  * @param opts.scaleContext - default:true
  * @param opts.attributes
  * @returns object - { canvas, context, gl?, width, height }
@@ -115,6 +129,7 @@ export const resizeCanvas = ({
   width,
   height,
   pixelRatio = 1,
+  pixelated = false,
   scaleContext = true,
   attributes,
 }: {
@@ -123,6 +138,7 @@ export const resizeCanvas = ({
   width: number;
   height: number;
   pixelRatio?: number;
+  pixelated: boolean;
   scaleContext?: boolean;
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }): {
@@ -153,14 +169,23 @@ export const resizeCanvas = ({
 
   if (context === "2d") {
     // 2d
-    // REVIEW: when compiled to JS, this seems redundant?
     if (canvas instanceof HTMLCanvasElement) {
       ctx = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
+
+      if (pixelated) {
+        canvas.style.imageRendering = "pixelated";
+        ctx.imageSmoothingEnabled = false;
+      }
     } else {
+      // offscreen context
       ctx = canvas.getContext(
         "2d",
         attributes
       ) as OffscreenCanvasRenderingContext2D;
+
+      if (pixelated) {
+        ctx.imageSmoothingEnabled = false;
+      }
     }
     if (!ctx) throw new Error("2d context cannot be created");
     if (scaleContext) ctx.scale(pixelRatio, pixelRatio);
