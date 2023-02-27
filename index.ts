@@ -11,7 +11,7 @@ import { appendChild } from "@daeinc/dom";
  * @param opts.pixelRatio - default: 1
  * @param opts.scaleContext - scale context to keep shape sizes consistent. default: true.
  * @param opts.attributes - context attributes
- * @param opts.offscreen - whether to attach to document
+ * @param opts.offscreen - still uses a regular HTMLCanvasElement but will not attach to document.
  * @returns object - { canvas, context, gl?, width, height }
 
  */
