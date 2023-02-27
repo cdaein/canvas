@@ -6,7 +6,7 @@ export default defineConfig({
   target: "esnext",
   dts: true,
   splitting: false,
-  sourcemap: false,
+  sourcemap: true,
   clean: true,
   treeshake: true,
   // minify: true,
