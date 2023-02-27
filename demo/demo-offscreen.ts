@@ -18,6 +18,7 @@ const {
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,
+  pixelated: true,
   scaleContext: true,
   attributes: {
     alpha: false,
@@ -48,6 +49,7 @@ const {
   width,
   height,
   pixelRatio: window.devicePixelRatio,
+  pixelated: true,
   attributes: {
     willReadFrequently: true,
   },
@@ -109,6 +111,7 @@ window.addEventListener("resize", () => {
     width: window.innerWidth,
     height: window.innerHeight,
     pixelRatio: window.devicePixelRatio,
+    pixelated: true,
   }));
 
   resizeCanvas({

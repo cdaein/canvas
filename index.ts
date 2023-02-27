@@ -138,7 +138,7 @@ export const resizeCanvas = ({
   width: number;
   height: number;
   pixelRatio?: number;
-  pixelated: boolean;
+  pixelated?: boolean;
   scaleContext?: boolean;
   attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }): {
