@@ -38,6 +38,8 @@ export const createCanvas = ({
 
   if (!offscreen) {
     appendChild(parent, canvas);
+  } else {
+    canvas.style.display = `none`;
   }
 
   return resizeCanvas({
