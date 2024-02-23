@@ -1,24 +1,28 @@
+// TODO:
+// - add webgl canvas tests
+
 import { describe, expect, test } from "vitest";
 import { createCanvas } from "./index";
 
 describe("createCanvas() in 2d mode", () => {
-  const { canvas, context } = createCanvas<"2d">({
+  const { canvas, context } = createCanvas({
     context: "2d",
     width: 500,
     height: 500,
   });
-  const { canvas: cnv, gl } = createCanvas<"webgl2">({
-    // context: "2d",
-    width: 500,
-    height: 500,
-  });
-  gl.viewport(0, 0, 10, 10);
 
-  test("has <body> as parent by default", () => {
-    expect(canvas.parentNode instanceof HTMLBodyElement).toEqual(true);
-    expect(canvas.parentElement!.tagName.toLowerCase()).toEqual("body");
-    expect(canvas.parentElement!.nodeName.toLowerCase()).toEqual("body");
+  test("doesn't have a default parent", () => {
+    expect(canvas.parentNode).toEqual(null);
+    // expect(canvas.parentElement!.tagName.toLowerCase()).toEqual("body");
+    // expect(canvas.parentElement!.nodeName.toLowerCase()).toEqual("body");
   });
+
+  // no more default parent
+  // test("has <body> as parent by default", () => {
+  //   expect(canvas.parentNode instanceof HTMLBodyElement).toEqual(true);
+  //   expect(canvas.parentElement!.tagName.toLowerCase()).toEqual("body");
+  //   expect(canvas.parentElement!.nodeName.toLowerCase()).toEqual("body");
+  // });
 
   test("returns a new canvas element", () => {
     expect(canvas instanceof HTMLCanvasElement).toBe(true);
@@ -73,7 +77,7 @@ describe("createCanvas() in 2d mode", () => {
 describe("createCanvas() with parent in 2d mode", () => {
   const parent = document.createElement("div");
   parent.id = "canvas-container";
-  const { canvas } = createCanvas<"2d">({
+  const { canvas } = createCanvas({
     parent,
     context: "2d",
     width: 500,
@@ -91,7 +95,7 @@ describe("createCanvas() with parent in 2d mode", () => {
 describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
   const w = 500;
   const h = 300;
-  const { canvas, context } = createCanvas<"2d">({
+  const { canvas, context } = createCanvas({
     context: "2d",
     width: w,
     height: h,
@@ -118,7 +122,7 @@ describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
 describe("createCanvas() with pixelRatio=2 in 2d mode", () => {
   const w = 500;
   const h = 300;
-  const { canvas, context } = createCanvas<"2d">({
+  const { canvas, context } = createCanvas({
     context: "2d",
     width: w,
     height: h,
@@ -145,7 +149,7 @@ describe("createCanvas() with pixelRatio=2 in 2d mode", () => {
 describe("createCanvas() with pixelRatio=2 & scaleContext=false in 2d mode", () => {
   const w = 500;
   const h = 300;
-  const { context } = createCanvas<"2d">({
+  const { context } = createCanvas({
     context: "2d",
     width: w,
     height: h,
