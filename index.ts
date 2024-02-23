@@ -126,10 +126,8 @@ export const resizeCanvas = <Ctx extends Context>({
 }) => {
   canvas.width = width * pixelRatio;
   canvas.height = height * pixelRatio;
-  if (canvas instanceof HTMLCanvasElement) {
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-  }
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
 
   if (context === "2d") {
     const ctx = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
