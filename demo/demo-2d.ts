@@ -5,15 +5,14 @@ const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
-// return type assertion is needed as context may be '2d' or 'webgl'
 const {
   canvas,
   context: ctx,
-  gl,
   width: w,
   height: h,
 } = createCanvas({
   // parent: "div#test",
+  parent: "body",
   context: "2d",
   width: 500,
   height: 500,
@@ -22,21 +21,9 @@ const {
   attributes: {
     alpha: false,
   },
-}) as {
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
-  gl: WebGLRenderingContext;
-  width: number;
-  height: number;
-};
-
-// gl is only available with webgl mode
-console.log(gl === undefined);
+});
 
 console.log(ctx.getContextAttributes());
-
-// console.log(canvas.width, canvas.height);
-// console.log(w, h);
 
 let width = w;
 let height = h;
