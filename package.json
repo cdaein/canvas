@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@daeinc/draw": "^0.5.0",
+    "canvas": "^2.11.2",
     "jsdom": "^24.0.0",
     "parcel": "^2.11.0",
     "tsup": "^8.0.2",
