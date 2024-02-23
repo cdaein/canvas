@@ -2,13 +2,17 @@ import { describe, expect, test } from "vitest";
 import { createCanvas } from "./index";
 
 describe("createCanvas() in 2d mode", () => {
-  const { canvas, context } = createCanvas({
+  const { canvas, context } = createCanvas<"2d">({
+    context: "2d",
     width: 500,
     height: 500,
-  }) as {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
-  };
+  });
+  const { canvas: cnv, gl } = createCanvas<"webgl2">({
+    // context: "2d",
+    width: 500,
+    height: 500,
+  });
+  gl.viewport(0, 0, 10, 10);
 
   test("has <body> as parent by default", () => {
     expect(canvas.parentNode instanceof HTMLBodyElement).toEqual(true);
@@ -28,7 +32,11 @@ describe("createCanvas() in 2d mode", () => {
   });
 
   test("returns context object from correct canvas", () => {
-    const { canvas: anotherCanvas } = createCanvas({ width: 500, height: 500 });
+    const { canvas: anotherCanvas } = createCanvas({
+      context: "2d",
+      width: 500,
+      height: 500,
+    });
     expect(canvas.getContext("2d") === context).toBe(true);
     expect(anotherCanvas.getContext("2d") === context).toBe(false);
   });
@@ -65,17 +73,12 @@ describe("createCanvas() in 2d mode", () => {
 describe("createCanvas() with parent in 2d mode", () => {
   const parent = document.createElement("div");
   parent.id = "canvas-container";
-  const { canvas } = createCanvas({
+  const { canvas } = createCanvas<"2d">({
     parent,
     context: "2d",
     width: 500,
     height: 500,
-  }) as {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
-    width: number;
-    height: number;
-  };
+  });
 
   test("has correct parent element", () => {
     expect(parent instanceof HTMLDivElement).toEqual(true);
@@ -88,17 +91,12 @@ describe("createCanvas() with parent in 2d mode", () => {
 describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
   const w = 500;
   const h = 300;
-  const { canvas, context } = createCanvas({
+  const { canvas, context } = createCanvas<"2d">({
     context: "2d",
     width: w,
     height: h,
     pixelRatio: 1,
-  }) as {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
-    width: number;
-    height: number;
-  };
+  });
 
   test("returns same width and height as parameters", () => {
     expect(canvas.width).toEqual(w);
@@ -111,7 +109,7 @@ describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
   });
 
   test("scales context correctly (1, 1)", () => {
-    const mat = (context as CanvasRenderingContext2D).getTransform();
+    const mat = context.getTransform();
     expect(mat.a).toEqual(1); // x scale
     expect(mat.d).toEqual(1); // y scale
   });
@@ -120,16 +118,12 @@ describe("createCanvas() with pixelRatio=1 in 2d mode", () => {
 describe("createCanvas() with pixelRatio=2 in 2d mode", () => {
   const w = 500;
   const h = 300;
-  const { canvas, context } = createCanvas({
+  const { canvas, context } = createCanvas<"2d">({
+    context: "2d",
     width: w,
     height: h,
     pixelRatio: 2,
-  }) as {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
-    width: number;
-    height: number;
-  };
+  });
 
   test("returns double the width and height as parameters", () => {
     expect(canvas.width).toEqual(w * 2);
@@ -142,7 +136,7 @@ describe("createCanvas() with pixelRatio=2 in 2d mode", () => {
   });
 
   test("scales context correctly (2, 2)", () => {
-    const mat = (context as CanvasRenderingContext2D).getTransform();
+    const mat = context.getTransform();
     expect(mat.a).toEqual(2); // x scale
     expect(mat.d).toEqual(2); // y scale
   });
@@ -151,20 +145,16 @@ describe("createCanvas() with pixelRatio=2 in 2d mode", () => {
 describe("createCanvas() with pixelRatio=2 & scaleContext=false in 2d mode", () => {
   const w = 500;
   const h = 300;
-  const { context } = createCanvas({
+  const { context } = createCanvas<"2d">({
+    context: "2d",
     width: w,
     height: h,
     pixelRatio: 2,
     scaleContext: false,
-  }) as {
-    canvas: HTMLCanvasElement;
-    context: CanvasRenderingContext2D;
-    width: number;
-    height: number;
-  };
+  });
 
   test("does not scale context", () => {
-    const mat = (context as CanvasRenderingContext2D).getTransform();
+    const mat = context.getTransform();
     expect(mat.a).toEqual(1);
     expect(mat.d).toEqual(1);
   });
