@@ -56,7 +56,16 @@ export const createCanvas = ({
     pixelated,
     scaleContext,
     attributes,
-  });
+  }) as {
+    canvas: HTMLCanvasElement;
+    context:
+      | CanvasRenderingContext2D
+      | WebGLRenderingContext
+      | WebGL2RenderingContext;
+    gl?: WebGLRenderingContext | WebGL2RenderingContext;
+    width: number;
+    height: number;
+  };
 };
 
 /**
@@ -102,7 +111,16 @@ export const createOffscreenCanvas = ({
     pixelated,
     scaleContext,
     attributes,
-  });
+  }) as {
+    canvas: OffscreenCanvas;
+    context:
+      | OffscreenCanvasRenderingContext2D
+      | WebGLRenderingContext
+      | WebGL2RenderingContext;
+    gl?: WebGLRenderingContext | WebGL2RenderingContext;
+    width: number;
+    height: number;
+  };
 };
 
 //
