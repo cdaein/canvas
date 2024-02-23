@@ -17,9 +17,7 @@ import { createCanvas, ... } from "@daeinc/canvas"
 
 ## Functions
 
-Documentation is updated for `0.10.0`.
-
-> Note: drawing functions up to `0.7.1` has now moved to [`@daeinc/draw`](https://github.com/cdaein/draw).
+Documentation is updated for `0.15.0`.
 
 ### createCanvas
 
@@ -110,28 +108,6 @@ const resizeCanvas: ({
 
 Resize canvas and return data `{ canvas, context?, gl?, width, height }`. When `scaleContext=true`, it also scale the context to `pixelRatio`.
 
-### setupCanvas
-
-```ts
-const setupCanvas: ({
-  parent,
-  canvas,
-  width,
-  height,
-  pixelRatio,
-}: {
-  parent?: string | Element | undefined;
-  canvas: HTMLCanvasElement;
-  width: number;
-  height: number;
-  pixelRatio?: number | undefined;
-}) => {
-  canvas: HTMLCanvasElement;
-  width: number;
-  height: number;
-  pixelRatio: number;
-};
-```
 
 ## License
 
