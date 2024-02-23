@@ -32,41 +32,24 @@ const createCanvas: ({
   pixelRatio,
   scaleContext,
   attributes,
-  offscreen,
 }: {
-  parent?: string | Element | undefined;
-  context?: "2d" | "webgl" | "webgl2" | undefined;
+  parent?: string | Element | null;
+  context?: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
-  pixelRatio?: number | undefined;
-  scaleContext?: boolean | undefined;
+  pixelRatio?: number;
+  scaleContext?: boolean;
   attributes?:
     | CanvasRenderingContext2DSettings
-    | WebGLContextAttributes
-    | undefined;
-  offscreen?: boolean | undefined;
-}) => {
-  canvas: HTMLCanvasElement | OffscreenCanvas;
-  context:
-    | CanvasRenderingContext2D
-    | WebGLRenderingContext
-    | WebGL2RenderingContext
-    | OffscreenCanvasRenderingContext2D;
-  gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
-  width: number;
-  height: number;
-};
+    | WebGLContextAttributes;
+})
 ```
 
-Create a new canvas and return `{ canvas, context, gl?, width, height }`.
+Create a new canvas and return `{ canvas, context, width, height }` in 2d and `{ canvas, gl, width, height }` in webgl.
 
-It takes an optional `parent` parameter. The parent can be either `string` (will be used for `querySelector()`) or `Element`. Returned `width` and `height` may not be the same as `canvas.width` and `canvas.height` due to `pixelRatio` scaling.
+The parent can be either `string` (will be used for `querySelector()`) or `Element`. If `parent` is `undefined` or `null`, the canvas is not attached to the document. Returned `width` and `height` may not be the same as `canvas.width` and `canvas.height` due to `pixelRatio` scaling.
 
-`context` supports `2d`, `webgl` or `webgl2` and creates a proper context. When `webgl` context is created, `gl` object will also be returned. Internally, `gl.viewport()` is called to scale context according to `pixelRatio` parameter.
-
-When `offscreen` is `true`, the canvas will not be attached to document. It still creates a regular `HTMLCanvasElement`. For a real offscreen canvas, use `createOffscreenCanvas()`.
-
-Returned `context` may ber `2d` or `webgl`, return type assertions are needed when calling `createCanvas()`. See demos for how to use.
+`context` supports `2d`, `webgl` or `webgl2` and creates a proper context. When `webgl` context is created, `gl.viewport()` is internally called to scale context according to `pixelRatio` parameter.
 
 ### createOffscreenCanvas
 
@@ -82,23 +65,12 @@ const createOffscreenCanvas: ({
   context: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
-  pixelRatio?: number | undefined;
-  scaleContext?: boolean | undefined;
+  pixelRatio?: number;
+  scaleContext?: boolean;
   attributes?:
     | CanvasRenderingContext2DSettings
-    | WebGLContextAttributes
-    | undefined;
-}) => {
-  canvas: HTMLCanvasElement | OffscreenCanvas;
-  context:
-    | CanvasRenderingContext2D
-    | WebGLRenderingContext
-    | WebGL2RenderingContext
-    | OffscreenCanvasRenderingContext2D;
-  gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
-  width: number;
-  height: number;
-};
+    | WebGLContextAttributes;
+})
 ```
 
 Creates an `OffscreenCanvas`.
@@ -115,30 +87,28 @@ const resizeCanvas: ({
   scaleContext,
   attributes,
 }: {
-  canvas: HTMLCanvasElement | OffscreenCanvas;
+  canvas: HTMLCanvasElement;
   context: "2d" | "webgl" | "webgl2";
   width: number;
   height: number;
-  pixelRatio?: number | undefined;
-  scaleContext?: boolean | undefined;
+  pixelRatio?: number;
+  scaleContext?: boolean;
   attributes?:
     | CanvasRenderingContext2DSettings
-    | WebGLContextAttributes
-    | undefined;
+    | WebGLContextAttributes;
 }) => {
-  canvas: HTMLCanvasElement | OffscreenCanvas;
-  context:
+  canvas: HTMLCanvasElement;
+  context?:
     | CanvasRenderingContext2D
     | WebGLRenderingContext
-    | WebGL2RenderingContext
-    | OffscreenCanvasRenderingContext2D;
-  gl?: WebGLRenderingContext | WebGL2RenderingContext | undefined;
+    | WebGL2RenderingContext;
+  gl?: WebGLRenderingContext | WebGL2RenderingContext;
   width: number;
   height: number;
 };
 ```
 
-Resize canvas and return data `{ canvas, context, gl?, width, height }`. When `scaleContext=true`, it also scale the context to `pixelRatio`.
+Resize canvas and return data `{ canvas, context?, gl?, width, height }`. When `scaleContext=true`, it also scale the context to `pixelRatio`.
 
 ### setupCanvas
 
@@ -162,10 +132,6 @@ const setupCanvas: ({
   pixelRatio: number;
 };
 ```
-
-## Example
-
-See the demo in `demo/demo.ts`.
 
 ## License
 
