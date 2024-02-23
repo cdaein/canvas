@@ -26,3 +26,26 @@ export type CanvasReturn<Ctx extends Context> = Ctx extends "2d"
           height: number;
         }
       : never;
+
+export type OffCanvasReturn<Ctx extends Context> = Ctx extends "2d"
+  ? {
+      canvas: OffscreenCanvas;
+      context: OffscreenCanvasRenderingContext2D;
+      width: number;
+      height: number;
+    }
+  : Ctx extends "webgl"
+    ? {
+        canvas: OffscreenCanvas;
+        gl: WebGLRenderingContext;
+        width: number;
+        height: number;
+      }
+    : Ctx extends "webgl2"
+      ? {
+          canvas: OffscreenCanvas;
+          gl: WebGL2RenderingContext;
+          width: number;
+          height: number;
+        }
+      : never;

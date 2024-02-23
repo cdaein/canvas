@@ -2,7 +2,12 @@
 // TODO: bitmaprenderer
 
 import { appendChild } from "@daeinc/dom";
-import type { CanvasReturn, Context, CtxAttributes } from "./types";
+import type {
+  CanvasReturn,
+  Context,
+  CtxAttributes,
+  OffCanvasReturn,
+} from "./types";
 
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
@@ -142,7 +147,7 @@ export const resizeCanvas = <Ctx extends Context>({
  * @returns
  */
 export const createOffscreenCanvas = <Ctx extends Context>({
-  context = "2d",
+  context,
   width,
   height,
   pixelRatio = 1,
@@ -150,7 +155,7 @@ export const createOffscreenCanvas = <Ctx extends Context>({
   scaleContext = true,
   attributes,
 }: {
-  context: Context;
+  context: Ctx;
   width: number;
   height: number;
   pixelRatio?: number;
@@ -171,7 +176,7 @@ export const createOffscreenCanvas = <Ctx extends Context>({
     pixelated,
     scaleContext,
     attributes,
-  });
+  }) as OffCanvasReturn<Ctx>;
 };
 
 /**
