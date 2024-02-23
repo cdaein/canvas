@@ -1,4 +1,4 @@
-import { createCanvas, createOffscreenCanvas, resizeCanvas } from "../index";
+import { createCanvas, createOffscreenCanvas, resizeCanvas, resizeOffscreenCanvas } from "../index";
 import { drawCircle, drawFillText } from "@daeinc/draw";
 
 const parent = document.createElement("div");
@@ -9,11 +9,11 @@ document.body.appendChild(parent);
 const {
   canvas,
   context: ctx,
-  gl,
   width: w,
   height: h,
 } = createCanvas({
   // parent: "div#test",
+  parent: 'body',
   context: "2d",
   width: 500,
   height: 500,
@@ -23,19 +23,11 @@ const {
   attributes: {
     alpha: false,
   },
-}) as {
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
-  gl: WebGLRenderingContext;
-  width: number;
-  height: number;
-};
+}) 
 
 let width = w;
 let height = h;
 
-// gl is only available with webgl mode
-console.assert(gl === undefined);
 console.log(ctx.getContextAttributes());
 
 // offscreen canvas
@@ -53,12 +45,7 @@ const {
   attributes: {
     willReadFrequently: true,
   },
-}) as {
-  canvas: OffscreenCanvas;
-  context: OffscreenCanvasRenderingContext2D;
-  width: number;
-  height: number;
-};
+}) 
 
 const draw = (
   ctx: OffscreenCanvasRenderingContext2D,
@@ -74,7 +61,7 @@ const draw = (
     [width / 2, height / 2],
     250
   );
-  ctx.fillStyle = `white`;
+  ctx.fillStyle = `red`;
   ctx.fill();
 
   ctx.beginPath();
@@ -114,7 +101,7 @@ window.addEventListener("resize", () => {
     pixelated: true,
   }));
 
-  resizeCanvas({
+  resizeOffscreenCanvas({
     canvas: offCanvas,
     context: "2d",
     width: window.innerWidth,

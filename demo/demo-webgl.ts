@@ -4,8 +4,8 @@ const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
-// return type assertion is needed as context may be '2d' or 'webgl'
-const { canvas, context, gl, width, height } = createCanvas({
+const { canvas,  gl, width, height } = createCanvas({
+  parent: 'body',
   context: "webgl",
   width: 500,
   height: 500,
@@ -13,17 +13,7 @@ const { canvas, context, gl, width, height } = createCanvas({
   attributes: {
     preserveDrawingBuffer: true,
   },
-}) as {
-  canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
-  gl: WebGLRenderingContext;
-  width: number;
-  height: number;
-};
-
-console.log(context);
-
-console.log(context.getContextAttributes());
+}) 
 
 console.log({ width, height });
 
