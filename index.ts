@@ -2,35 +2,7 @@
 // TODO: bitmaprenderer
 
 import { appendChild } from "@daeinc/dom";
-
-type Context = "2d" | "webgl" | "webgl2";
-
-type CtxAttributes<Ctx extends Context> = Ctx extends "2d"
-  ? CanvasRenderingContext2DSettings
-  : WebGLContextAttributes;
-
-type CanvasReturn<Ctx extends Context> = Ctx extends "2d"
-  ? {
-      canvas: HTMLCanvasElement;
-      context: CanvasRenderingContext2D;
-      width: number;
-      height: number;
-    }
-  : Ctx extends "webgl"
-    ? {
-        canvas: HTMLCanvasElement;
-        gl: WebGLRenderingContext;
-        width: number;
-        height: number;
-      }
-    : Ctx extends "webgl2"
-      ? {
-          canvas: HTMLCanvasElement;
-          gl: WebGL2RenderingContext;
-          width: number;
-          height: number;
-        }
-      : never;
+import type { CanvasReturn, Context, CtxAttributes } from "./types";
 
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
@@ -103,7 +75,7 @@ export const createCanvas = <Ctx extends Context>({
  * @param opts.pixelated - for 2d context
  * @param opts.scaleContext - default:true
  * @param opts.attributes
- * @returns object - { canvas, context, gl?, width, height }
+ * @returns object - { canvas, context?, gl?, width, height }
  */
 export const resizeCanvas = <Ctx extends Context>({
   canvas,
@@ -131,7 +103,7 @@ export const resizeCanvas = <Ctx extends Context>({
 
   if (context === "2d") {
     const ctx = canvas.getContext("2d", attributes) as CanvasRenderingContext2D;
-    if (!ctx) throw new Error(`Cannot get ${ctx} context`);
+    if (!ctx) throw new Error(`Cannot get ${context} context`);
     if (pixelated) {
       canvas.style.imageRendering = "pixelated";
       ctx.imageSmoothingEnabled = false;
@@ -142,7 +114,7 @@ export const resizeCanvas = <Ctx extends Context>({
     const gl = canvas.getContext(context, attributes) as
       | WebGLRenderingContext
       | WebGL2RenderingContext;
-    if (!gl) throw new Error(`Cannot get ${gl} context`);
+    if (!gl) throw new Error(`Cannot get ${context} context`);
     if (scaleContext) {
       gl.viewport(0, 0, width * pixelRatio, height * pixelRatio);
     } else {
@@ -154,6 +126,8 @@ export const resizeCanvas = <Ctx extends Context>({
 
 /**
  * create an OffscreenCanvas and context.
+ *
+ * NOT TESTED!!
  *
  * TODO: fulll implementation
  * TODO: add pixelated option (and test)
@@ -175,7 +149,6 @@ export const createOffscreenCanvas = <Ctx extends Context>({
   pixelated = false,
   scaleContext = true,
   attributes,
-  offscreen = true,
 }: {
   context: Context;
   width: number;
@@ -184,24 +157,88 @@ export const createOffscreenCanvas = <Ctx extends Context>({
   pixelated?: boolean;
   scaleContext?: boolean;
   attributes?: CtxAttributes<Ctx>;
-  offscreen: boolean;
 }) => {
+  // REVIEW: offscreen canvas defines width and height at creation. is it necessary to do it again in resize?
+  // keep in mind that there is no canvas.style
   const canvas = new OffscreenCanvas(width * pixelRatio, height * pixelRatio);
 
-  // return resizeCanvas<Ctx>({
-  //   canvas,
-  //   context,
-  //   width,
-  //   height,
-  //   pixelRatio,
-  //   pixelated,
-  //   scaleContext,
-  //   attributes,
-  //   offscreen,
-  // });
+  return resizeOffscreenCanvas<Ctx>({
+    canvas,
+    context,
+    width,
+    height,
+    pixelRatio,
+    pixelated,
+    scaleContext,
+    attributes,
+  });
 };
 
-//
+/**
+ * Resize offscreen canvas with given pixelRatio. In the current impl, there may be mismatch between the type generic Ctx and prop context:Context,
+ * but this function is generally used internally to create a canvas.
+ *
+ * NOT TESTED!!
+ *
+ * TODO: add pixelated option
+ *
+ * @param opts - options object
+ * @param opts.canvas - canvas to resize
+ * @param opts.context - which context to use
+ * @param opts.width
+ * @param opts.height
+ * @param opts.pixelRatio - default:1
+ * @param opts.pixelated - for 2d context
+ * @param opts.scaleContext - default:true
+ * @param opts.attributes
+ * @returns object - { canvas, context?, gl?, width, height }
+ */
+export const resizeOffscreenCanvas = <Ctx extends Context>({
+  canvas,
+  context,
+  width,
+  height,
+  pixelRatio = 1,
+  pixelated = false,
+  scaleContext = true,
+  attributes,
+}: {
+  canvas: OffscreenCanvas;
+  context: Context;
+  width: number;
+  height: number;
+  pixelRatio?: number;
+  pixelated?: boolean;
+  scaleContext?: boolean;
+  attributes?: CtxAttributes<Ctx>;
+}) => {
+  canvas.width = width * pixelRatio;
+  canvas.height = height * pixelRatio;
+
+  if (context === "2d") {
+    const ctx = canvas.getContext(
+      "2d",
+      attributes,
+    ) as OffscreenCanvasRenderingContext2D;
+    if (!ctx) throw new Error(`Cannot get ${ctx} context`);
+    if (pixelated) {
+      ctx.imageSmoothingEnabled = false;
+    }
+    if (scaleContext) ctx.scale(pixelRatio, pixelRatio);
+    return { canvas, context: ctx, width, height };
+  } else {
+    const gl = canvas.getContext(context, attributes) as
+      | WebGLRenderingContext
+      | WebGL2RenderingContext;
+    if (!gl) throw new Error(`Cannot get ${gl} context`);
+    if (scaleContext) {
+      gl.viewport(0, 0, width * pixelRatio, height * pixelRatio);
+    } else {
+      gl.viewport(0, 0, width, height);
+    }
+    return { canvas, gl, width, height };
+  }
+};
 
 /**
  * use existing canvas and set it up. (add to parent if any, set up size for canvas and canvas.style)
