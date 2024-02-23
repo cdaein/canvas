@@ -8,7 +8,7 @@ export default defineConfig({
       inline: ["vitest-canvas-mock"],
     },
     // For this config, check https://github.com/vitest-dev/vitest/issues/740
-    threads: false,
+    // threads: false,
     environmentOptions: {
       jsdom: {
         resources: "usable",
