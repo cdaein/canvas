@@ -23,9 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
-.parcel-cache
-
-demo
 process
 output
-demo/build*
