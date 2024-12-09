@@ -9,6 +9,9 @@ import type {
   OffCanvasReturn,
 } from "./types";
 
+// re-export types
+export type { Context } from "./types";
+
 /**
  * create a new canvas element and attach to document. Returned width&height may not be the same as canvas.width&height due to pixelRatio scaling.
  * 
