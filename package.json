@@ -11,7 +11,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "test": "vitest",
-    "demo": "parcel ./demo/demo.html --no-source-maps --no-cache --dist-dir ./demo/build/",
+    "demo": "vite",
     "build": "tsc --noemit && tsup"
   },
   "author": "Daeinc",
@@ -23,7 +23,6 @@
     "@daeinc/draw": "^0.5.0",
     "canvas": "^2.11.2",
     "jsdom": "^24.0.0",
-    "parcel": "^2.11.0",
     "tsup": "^8.0.2",
     "typescript": "^5.3.3",
     "vite": "^5.1.4",
