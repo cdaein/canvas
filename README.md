@@ -17,7 +17,7 @@ import { createCanvas, ... } from "@daeinc/canvas"
 
 ## Functions
 
-Documentation is updated for `0.15.0`.
+Documentation is updated for `0.16.0`.
 
 ### createCanvas
 
@@ -32,7 +32,7 @@ const createCanvas: ({
   attributes,
 }: {
   parent?: string | Element | null;
-  context?: "2d" | "webgl" | "webgl2";
+  context?: "2d" | "webgl" | "webgl2" | "webgpu";
   width: number;
   height: number;
   pixelRatio?: number;
@@ -43,11 +43,11 @@ const createCanvas: ({
 })
 ```
 
-Create a new canvas and return `{ canvas, context, width, height }` in 2d and `{ canvas, gl, width, height }` in webgl.
+Create a new canvas and return `{ canvas, context, width, height }` in 2d or WebGPU and `{ canvas, gl, width, height }` in webgl.
 
 The parent can be either `string` (will be used for `querySelector()`) or `Element`. If `parent` is `undefined` or `null`, the canvas is not attached to the document. Returned `width` and `height` may not be the same as `canvas.width` and `canvas.height` due to `pixelRatio` scaling.
 
-`context` supports `2d`, `webgl` or `webgl2` and creates a proper context. When `webgl` context is created, `gl.viewport()` is internally called to scale context according to `pixelRatio` parameter.
+`context` supports `2d`, `webgl`, `webgl2` and `webgpu` and creates a proper context. When `webgl` context is created, `gl.viewport()` is internally called to scale context according to `pixelRatio` parameter.
 
 ### createOffscreenCanvas
 
@@ -86,14 +86,12 @@ const resizeCanvas: ({
   attributes,
 }: {
   canvas: HTMLCanvasElement;
-  context: "2d" | "webgl" | "webgl2";
+  context: "2d" | "webgl" | "webgl2" | "webgpu";
   width: number;
   height: number;
   pixelRatio?: number;
   scaleContext?: boolean;
-  attributes?:
-    | CanvasRenderingContext2DSettings
-    | WebGLContextAttributes;
+  attributes?: CanvasRenderingContext2DSettings | WebGLContextAttributes;
 }) => {
   canvas: HTMLCanvasElement;
   context?:
@@ -106,8 +104,7 @@ const resizeCanvas: ({
 };
 ```
 
-Resize canvas and return data `{ canvas, context?, gl?, width, height }`. When `scaleContext=true`, it also scale the context to `pixelRatio`.
-
+Resize canvas and return data `{ canvas, context?, gl?, width, height }`. When `scaleContext=true`, it also scale the context to `pixelRatio`. `scaleContext` has no effect on WebGPU canvas.
 
 ## License
 
