@@ -1,8 +1,10 @@
-export type Context = "2d" | "webgl" | "webgl2";
+export type Context = "2d" | "webgl" | "webgl2" | "webgpu";
 
 export type CtxAttributes<Ctx extends Context> = Ctx extends "2d"
   ? CanvasRenderingContext2DSettings
-  : WebGLContextAttributes;
+  : Ctx extends "webgl" | "webgl2"
+    ? WebGLContextAttributes
+    : never;
 
 export type CanvasReturn<Ctx extends Context> = Ctx extends "2d"
   ? {
@@ -25,8 +27,16 @@ export type CanvasReturn<Ctx extends Context> = Ctx extends "2d"
           width: number;
           height: number;
         }
-      : never;
+      : Ctx extends "webgpu"
+        ? {
+            canvas: HTMLCanvasElement;
+            context: GPUCanvasContext;
+            width: number;
+            height: number;
+          }
+        : never;
 
+// TODO: webgpu
 export type OffCanvasReturn<Ctx extends Context> = Ctx extends "2d"
   ? {
       canvas: OffscreenCanvas;

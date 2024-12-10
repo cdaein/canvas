@@ -118,7 +118,7 @@ export const resizeCanvas = <Ctx extends Context>({
     }
     if (scaleContext) ctx.scale(pixelRatio, pixelRatio);
     return { canvas, context: ctx, width, height };
-  } else {
+  } else if (context === "webgl" || context === "webgl2") {
     const gl = canvas.getContext(context, attributes) as
       | WebGLRenderingContext
       | WebGL2RenderingContext;
@@ -129,6 +129,11 @@ export const resizeCanvas = <Ctx extends Context>({
       gl.viewport(0, 0, width, height);
     }
     return { canvas, gl, width, height };
+  } else {
+    const ctx = canvas.getContext("webgpu");
+    if (!ctx) throw new Error(`Cannot get ${context} context`);
+    // TODO: what else to set up here?
+    return { canvas, context: ctx, width, height };
   }
 };
 
