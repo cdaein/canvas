@@ -12,6 +12,7 @@ const { canvas, context, width, height } = createCanvas({
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,
+  // scaleContext: false,
 });
 
 console.log({ width, height });
@@ -38,9 +39,9 @@ fn v_main(
   @builtin(vertex_index) VertexIndex : u32
 ) -> @builtin(position) vec4f {
   var pos = array<vec2f, 3>(
-    vec2(0.0, 0.5),
-    vec2(-0.5, -0.5),
-    vec2(0.5, -0.5)
+    vec2(0.0, 0.8),
+    vec2(-0.5, -0.8),
+    vec2(0.5, -0.8)
   );
 
   return vec4f(pos[VertexIndex], 0.0, 1.0);
@@ -62,7 +63,7 @@ const renderPassDescriptor: GPURenderPassDescriptor = {
   colorAttachments: [
     {
       view: textureView,
-      clearValue: [0.5, 0.5, 0.5, 0],
+      clearValue: [1.0, 1.0, 1.0, 0],
       loadOp: "clear",
       storeOp: "store",
     },

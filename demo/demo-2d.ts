@@ -17,11 +17,14 @@ const {
   width: 500,
   height: 500,
   pixelRatio: window.devicePixelRatio,
-  scaleContext: true,
+  // scaleContext: false,
   attributes: {
     alpha: false,
   },
 });
+
+console.log({ width: w, height: h });
+console.log({ "canvas width": canvas.width, "canvas height": canvas.height });
 
 console.log(ctx.getContextAttributes());
 
