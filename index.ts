@@ -45,7 +45,7 @@ export const createCanvas = <Ctx extends Context>({
   height: number;
   pixelRatio?: number;
   pixelated?: boolean;
-  scaleContext?: boolean;
+  scaleContext?: Ctx extends "webgpu" ? undefined : boolean;
   attributes?: CtxAttributes<Ctx>;
 }) => {
   const canvas = document.createElement("canvas");
@@ -132,7 +132,9 @@ export const resizeCanvas = <Ctx extends Context>({
   } else {
     const ctx = canvas.getContext("webgpu");
     if (!ctx) throw new Error(`Cannot get ${context} context`);
-    // TODO: what else to set up here?
+    // NOTE: `scaleContext` has no effect on webgpu canvas
+    // I will need to find a way but it is not high priority.
+
     return { canvas, context: ctx, width, height };
   }
 };
