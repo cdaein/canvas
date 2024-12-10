@@ -1,6 +1,6 @@
 {
   "name": "@daeinc/canvas",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "Canvas utilities",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
