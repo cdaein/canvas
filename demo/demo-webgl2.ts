@@ -29,7 +29,7 @@ gl.clearColor(0, 0.3, 0, 1);
 gl.clear(gl.COLOR_BUFFER_BIT);
 
 // Set up the vertices for the circle
-const vertices = [];
+const vertices:number[] = [];
 const numVertices = 10;
 const radius = 500 / width;
 for (let i = 0; i <= numVertices; i++) {
