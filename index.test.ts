@@ -1,5 +1,6 @@
 // TODO:
 // - add webgl canvas tests
+// - add webgpu canvas tests
 
 import { describe, expect, test } from "vitest";
 import { createCanvas } from "./index";
