@@ -6,13 +6,54 @@ const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
-const { canvas, context, width, height } = createCanvas({
+const {
+  canvas,
+  context,
+  width: w,
+  height: h,
+} = createCanvas({
   parent: "body",
   context: "webgpu",
-  width: 500,
-  height: 500,
+  width: window.innerWidth,
+  height: window.innerHeight,
   pixelRatio: window.devicePixelRatio,
   // scaleContext: false,
+});
+
+let width = w;
+let height = h;
+
+const fitCanvasToParent = () => {
+  // resizing canvas style when !fullscreen
+  // const margin = 50; // px
+  const margin = 0; // px
+  const canvasParent = canvas.parentElement!;
+
+  // if canvas is child of body
+  const parentWidth = canvasParent.clientWidth;
+  const parentHeight = canvasParent.clientHeight;
+  const scale = Math.min(
+    1,
+    Math.min(
+      (parentWidth - margin * 2) / width,
+      (parentHeight - margin * 2) / height,
+    ),
+  );
+  canvas.style.transform = `scale(${scale})`;
+};
+
+// respond to resize event
+window.addEventListener("resize", () => {
+  ({ width, height } = resizeCanvas({
+    canvas,
+    context: "webgpu",
+    width: window.innerWidth,
+    height: window.innerHeight,
+    pixelRatio: window.devicePixelRatio,
+    pixelated: false,
+  }));
+
+  fitCanvasToParent();
 });
 
 console.log({ width, height });

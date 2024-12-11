@@ -11,7 +11,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "test": "vitest",
-    "demo": "vite",
+    "demo": "vite ./demo",
     "build": "tsc --noemit && tsup"
   },
   "author": "Daeinc",
