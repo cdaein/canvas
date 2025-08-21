@@ -25,6 +25,7 @@
     "@types/three": "^0.177.0",
     "@webgpu/types": "^0.1.62",
     "canvas": "^3.1.2",
+    "esbuild-plugin-license": "^1.2.3",
     "jsdom": "^26.1.0",
     "three": "^0.177.0",
     "tsup": "^8.5.0",
