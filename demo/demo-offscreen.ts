@@ -1,4 +1,9 @@
-import { createCanvas, createOffscreenCanvas, resizeCanvas, resizeOffscreenCanvas } from "../index";
+import {
+  createCanvas,
+  createOffscreenCanvas,
+  resizeCanvas,
+  resizeOffscreenCanvas,
+} from "../dist/index.js";
 import { drawCircle, drawFillText } from "@daeinc/draw";
 
 const parent = document.createElement("div");
@@ -13,7 +18,7 @@ const {
   height: h,
 } = createCanvas({
   // parent: "div#test",
-  parent: 'body',
+  parent: "body",
   context: "2d",
   width: 500,
   height: 500,
@@ -23,7 +28,7 @@ const {
   attributes: {
     alpha: false,
   },
-}) 
+});
 
 let width = w;
 let height = h;
@@ -45,13 +50,13 @@ const {
   attributes: {
     willReadFrequently: true,
   },
-}) 
+});
 
 const draw = (
   ctx: OffscreenCanvasRenderingContext2D,
   width: number,
   height: number,
-  count: number
+  count: number,
 ) => {
   ctx.fillStyle = `gray`;
   ctx.fillRect(0, 0, width, height);
@@ -59,7 +64,7 @@ const draw = (
   drawCircle(
     ctx as unknown as CanvasRenderingContext2D,
     [width / 2, height / 2],
-    250
+    250,
   );
   ctx.fillStyle = `red`;
   ctx.fill();

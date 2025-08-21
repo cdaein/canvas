@@ -1,4 +1,4 @@
-import { createCanvas, resizeCanvas } from "../index";
+import { createCanvas, resizeCanvas } from "../dist/index.js";
 import * as THREE from "three/webgpu";
 import { Fn, normalLocal, vec4 } from "three/tsl";
 

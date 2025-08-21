@@ -1,11 +1,11 @@
-import { createCanvas, resizeCanvas } from "../index";
+import { createCanvas, resizeCanvas } from "../dist/index.js";
 
 const parent = document.createElement("div");
 parent.id = "app";
 document.body.appendChild(parent);
 
-const { canvas,  gl, width, height } = createCanvas({
-  parent: 'body',
+const { canvas, gl, width, height } = createCanvas({
+  parent: "body",
   context: "webgl",
   width: 500,
   height: 500,
@@ -13,7 +13,7 @@ const { canvas,  gl, width, height } = createCanvas({
   attributes: {
     preserveDrawingBuffer: true,
   },
-}) 
+});
 
 console.log({ width, height });
 
@@ -29,7 +29,7 @@ gl.clearColor(0, 0.3, 0, 1);
 gl.clear(gl.COLOR_BUFFER_BIT);
 
 // Set up the vertices for the circle
-const vertices:number[] = [];
+const vertices: number[] = [];
 const numVertices = 10;
 const radius = 500 / width;
 for (let i = 0; i <= numVertices; i++) {
@@ -52,7 +52,7 @@ gl.shaderSource(
   void main() {
     gl_Position = vec4(a_position, 0, 1);
   }
-`
+`,
 );
 gl.compileShader(vertexShader);
 
@@ -64,7 +64,7 @@ gl.shaderSource(
   void main() {
     gl_FragColor = vec4(1, 0, 0, 1);
   }
-`
+`,
 );
 gl.compileShader(fragmentShader);
 
