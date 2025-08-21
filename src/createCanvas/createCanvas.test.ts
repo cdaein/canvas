@@ -1,9 +1,5 @@
-// TODO:
-// - add webgl canvas tests
-// - add webgpu canvas tests
-
 import { describe, expect, test } from "vitest";
-import { createCanvas } from "./index";
+import { createCanvas } from "./createCanvas";
 
 describe("createCanvas() in 2d mode", () => {
   const { canvas, context } = createCanvas({
