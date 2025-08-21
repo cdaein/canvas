@@ -1,4 +1,4 @@
-import { createCanvas, resizeCanvas } from "../index";
+import { createCanvas } from "../dist/index.js";
 
 const parent = document.createElement("div");
 parent.id = "app";

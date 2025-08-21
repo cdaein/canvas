@@ -2,8 +2,9 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    setupFiles: ["./index.test.ts"],
     environment: "jsdom",
+    globals: true,
+    // setupFiles: ["./index.test.ts"],
     deps: {
       inline: ["vitest-canvas-mock"],
     },

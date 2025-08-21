@@ -1,6 +1,6 @@
 /// <reference types="@webgpu/types" />
 
-import { createCanvas, resizeCanvas } from "../index";
+import { createCanvas, resizeCanvas } from "../dist/index.js";
 
 const parent = document.createElement("div");
 parent.id = "app";

@@ -1,4 +1,4 @@
-import { createCanvas, resizeCanvas } from "../index";
+import { createCanvas, resizeCanvas } from "../dist/index.js";
 import { drawCircle, drawFillText } from "@daeinc/draw";
 
 const parent = document.createElement("div");
